@@ -1,0 +1,11 @@
+# Dependency directory
+**/node_modules/**/*
+
+# Ignore built ts files
+**/.cache/**/*
+
+# Temporary directories
+**/.tmp/**/*
+
+# Ignore auto-generated files
+**/package-lock.json
