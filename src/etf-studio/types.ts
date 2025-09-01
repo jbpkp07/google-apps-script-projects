@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-type ETFTableRowNames = {
+type ETFScrapingTableRow = {
     etfCellName: string;
-    isActiveCellName: string;
+    isEnabledCellName: string;
     slugCellName: string;
     urlCellName: string;
     scrapeResultsRangeName: string;

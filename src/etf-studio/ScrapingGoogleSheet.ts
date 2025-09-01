@@ -9,26 +9,32 @@ class ScrapingGoogleSheet extends GoogleSheet {
         super(SCRAPING_SHEET_NAME);
     }
 
-    public getScrapeResults(row: ETFTableRowNames): Either<number[]> {
+    public getScrapeResults(row: ETFScrapingTableRow): Either<number[]> {
         const { scrapeResultsRangeName } = row;
 
         return this.getRowValues(scrapeResultsRangeName, Utils.isNumber);
     }
 
-    public isExecutionDisabled(event?: TimeDrivenEvent): boolean {
-        const isTimeTriggerAllowed = this.getCellValue(IS_TIME_TRIGGER_ALLOWED_CELL_NAME, Utils.isBoolean).unwrap();
+    public isScrapingEnabled(event?: TimeDrivenEvent): boolean {
+        const { isBoolean } = Utils;
+
         const wasTimeTriggered = !!event?.triggerUid;
+        const isTimeTriggerEnabled = this.getCellValue(IS_SCRAPING_TIME_TRIGGER_ENABLED_CELL_NAME, isBoolean).unwrap();
 
-        return !isTimeTriggerAllowed && wasTimeTriggered;
+        if (wasTimeTriggered && !isTimeTriggerEnabled) {
+            return false;
+        }
+
+        return this.getCellValue(IS_SCRAPING_ENABLED_CELL_NAME, isBoolean).unwrap();
     }
 
-    public isRowActive(row: ETFTableRowNames): boolean {
-        const { isActiveCellName } = row;
+    public isRowEnabled(row: ETFScrapingTableRow): boolean {
+        const { isEnabledCellName } = row;
 
-        return this.getCellValue(isActiveCellName, Utils.isBoolean).unwrap();
+        return this.getCellValue(isEnabledCellName, Utils.isBoolean).unwrap();
     }
 
-    public retryUpdateUrl(row: ETFTableRowNames): void {
+    public retryUpdateUrl(row: ETFScrapingTableRow): void {
         const { etfCellName } = row;
 
         const etf = this.getCellValue(etfCellName, Utils.isNonEmptyString).unwrap();
@@ -44,10 +50,10 @@ class ScrapingGoogleSheet extends GoogleSheet {
         this.setCellValue(LAST_SCRAPED_TIME_CELL_NAME, currentTime).assertOK();
     }
 
-    public updateUrl(row: ETFTableRowNames): void {
+    public updateUrl(row: ETFScrapingTableRow): void {
         const { slugCellName, urlCellName } = row;
 
-        const domain = this.getCellValue(DOMAIN_CELL_NAME, Utils.isNonEmptyString).unwrap();
+        const domain = this.getCellValue(SCRAPING_DOMAIN_CELL_NAME, Utils.isNonEmptyString).unwrap();
         const slug = this.getCellValue(slugCellName, Utils.isNonEmptyString).unwrap();
 
         const url = Utils.createUrl(domain, slug);

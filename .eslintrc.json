@@ -62,7 +62,7 @@
                 "@typescript-eslint/triple-slash-reference": "off",
                 "@typescript-eslint/no-unused-vars": [
                     "warn",
-                    { "varsIgnorePattern": "^(handler|Utils|Either|GoogleSheet)$" }
+                    { "varsIgnorePattern": "^(handler|populateScrapingUrls|Utils|Either|GoogleSheet)$" }
                 ],
                 "class-methods-use-this": "off",
                 "import/order": [
