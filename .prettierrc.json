@@ -17,13 +17,13 @@
         {
             "files": ["./src/**/consts.ts"],
             "options": {
-                "printWidth": 160
+                "printWidth": 130
             }
         },
         {
             "files": ["./dist/**/index.js"],
             "options": {
-                "printWidth": 160,
+                "printWidth": 130,
                 "tabWidth": 2
             }
         }

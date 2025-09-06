@@ -1,5 +1,5 @@
 /// <reference path="./types.ts" />
-/// <reference path="./Utils.ts" />
+/// <reference path="./Type.ts" />
 
 class Either<T> {
     private readonly _value: Error | NotError<T>;
@@ -19,7 +19,7 @@ class Either<T> {
     }
 
     static fromError<T>(error: unknown): Either<T> {
-        return Utils.isError(error) // prettier-ignore
+        return Type.isError(error) // prettier-ignore
             ? Either.new<T>(error)
             : Either.newError(Utils.stringify(error));
     }
@@ -29,7 +29,7 @@ class Either<T> {
     }
 
     public unwrap(): NotError<T> {
-        if (Utils.isError(this._value)) {
+        if (Type.isError(this._value)) {
             throw this._value;
         }
 
@@ -37,11 +37,11 @@ class Either<T> {
     }
 
     public isOK(): boolean {
-        return !Utils.isError(this._value);
+        return !Type.isError(this._value);
     }
 
     public assertOK(): void {
-        if (Utils.isError(this._value)) {
+        if (Type.isError(this._value)) {
             throw this._value;
         }
     }

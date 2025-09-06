@@ -57,12 +57,12 @@
                 "@typescript-eslint/ban-types": ["warn", { "types": { "Function": false } }],
                 "@typescript-eslint/no-use-before-define": [
                     "warn",
-                    { "functions": false, "classes": true, "variables": true, "allowNamedExports": false }
+                    { "functions": false, "classes": false, "variables": true, "allowNamedExports": false }
                 ],
                 "@typescript-eslint/triple-slash-reference": "off",
                 "@typescript-eslint/no-unused-vars": [
                     "warn",
-                    { "varsIgnorePattern": "^(handler|populateScrapingUrls|Utils|Either|GoogleSheet)$" }
+                    { "varsIgnorePattern": "^(handler|populateScrapingUrls|Type|Utils|Either|GoogleSheet)$" }
                 ],
                 "class-methods-use-this": "off",
                 "import/order": [
