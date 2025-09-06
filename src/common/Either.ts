@@ -18,6 +18,12 @@ class Either<T> {
         return new Either<T>(value);
     }
 
+    static fromError<T>(error: unknown): Either<T> {
+        return Utils.isError(error) // prettier-ignore
+            ? Either.new<T>(error)
+            : Either.newError(Utils.stringify(error));
+    }
+
     public value(): Error | NotError<T> {
         return this._value;
     }

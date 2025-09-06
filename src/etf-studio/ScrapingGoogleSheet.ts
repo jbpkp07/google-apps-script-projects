@@ -12,7 +12,7 @@ class ScrapingGoogleSheet extends GoogleSheet {
     public getScrapeResults(row: ETFScrapingTableRow): Either<number[]> {
         const { scrapeResultsRangeName } = row;
 
-        return this.getRowValues(scrapeResultsRangeName, Utils.isNumber);
+        return this.getRowValues(scrapeResultsRangeName, Utils.isNumberArray);
     }
 
     public isScrapingEnabled(event?: TimeDrivenEvent): boolean {

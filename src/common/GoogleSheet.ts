@@ -14,8 +14,8 @@ class GoogleSheet {
             const value = sheet ?? new Error(`"${sheetName}" sheet not found`);
 
             return Either.new(value);
-        } catch {
-            return Either.newError("Unable to get Active Spreadsheet");
+        } catch (error) {
+            return Either.fromError(error);
         }
     }
 
@@ -31,10 +31,10 @@ class GoogleSheet {
             : Either.newError(`Value at "${cellName}" is either missing or the wrong type`);
     }
 
-    public getRowValues<T>(rangeName: string, isTypeOK: IsTypeOK<T>): Either<T[]> {
+    public getRowValues<T>(rangeName: string, isTypeOK: IsTypeOK<T[]>): Either<T[]> {
         const values: unknown[] | undefined = this.getRange(rangeName)?.getValues()[0];
 
-        return values?.every(isTypeOK)
+        return isTypeOK(values)
             ? Either.new(values)
             : Either.newError(`Row values at "${rangeName}" are either missing or the wrong type`);
     }

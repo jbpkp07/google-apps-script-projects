@@ -8,4 +8,6 @@ type CellRange = GoogleAppsScript.Spreadsheet.Range;
 
 type NotError<T> = T extends Error ? never : T;
 
-type IsTypeOK<T> = (val: unknown) => val is NotError<T>;
+type IsTypeOK<T> = (value: unknown) => value is NotError<T>;
+
+type BasicRecord = Record<string, unknown>;
