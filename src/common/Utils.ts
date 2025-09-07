@@ -2,6 +2,8 @@
 
 /* eslint @typescript-eslint/member-ordering: ["warn", { default: { order: "natural-case-insensitive" } }] */
 
+type FetchResponse<T> = (url: string) => Either<T>;
+
 abstract class Utils {
     static alert = (anything: unknown): void => {
         const message = Utils.stringify(anything);
@@ -41,17 +43,22 @@ abstract class Utils {
         return Utils.trim(domain, "/") + "/" + Utils.trim(slug, "/");
     };
 
-    static fetch = <T>(url: string, isTypeOK: IsTypeOK<T>): Either<T> => {
-        try {
-            const response = UrlFetchApp.fetch(url).getContentText();
-            const parsedResponse: unknown = JSON.parse(response);
+    static fetchResponseOf = <T>(isTypeOK: IsTypeOK<T>): FetchResponse<T> => {
+        //
+        const fetchResponse = (url: string): Either<T> => {
+            try {
+                const response = UrlFetchApp.fetch(url).getContentText();
+                const parsedResponse: unknown = JSON.parse(response);
 
-            return isTypeOK(parsedResponse)
-                ? Either.new(parsedResponse)
-                : Either.newError(`Fetched wrong type from ${url}; Response: ${response}`);
-        } catch (error) {
-            return Either.fromError(error);
-        }
+                return isTypeOK(parsedResponse)
+                    ? Either.new(parsedResponse)
+                    : Either.newError(`Fetched wrong type from ${url}; Response: ${response}`);
+            } catch (error) {
+                return Either.fromError(error);
+            }
+        };
+
+        return fetchResponse;
     };
 
     static getCurrentTime = (): string => {

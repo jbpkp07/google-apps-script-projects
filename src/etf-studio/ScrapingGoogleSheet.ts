@@ -7,6 +7,12 @@
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 class ScrapingGoogleSheet extends GoogleSheet {
+    private getCellBoolean = this.getCellValueOf(Type.boolean());
+
+    private getCellString = this.getCellValueOf(Type.nonEmptyString());
+
+    private getRowNumberArray = this.getRowValuesOf(Type.numberArray());
+
     constructor() {
         super(SCRAPING_SHEET_NAME);
     }
@@ -14,32 +20,30 @@ class ScrapingGoogleSheet extends GoogleSheet {
     public getScrapeResults(row: ETFScrapingTableRow): Either<number[]> {
         const { scrapeResultsRangeName } = row;
 
-        return this.getRowValues(scrapeResultsRangeName, Type.isNumberArray);
+        return this.getRowNumberArray(scrapeResultsRangeName);
     }
 
     public isScrapingEnabled(event?: TimeDrivenEvent): boolean {
-        const { isBoolean } = Type;
-
         const wasTimeTriggered = !!event?.triggerUid;
-        const isTimeTriggerEnabled = this.getCellValue(IS_SCRAPING_TIME_TRIGGER_ENABLED_CELL_NAME, isBoolean).unwrap();
+        const isTimeTriggerEnabled = this.getCellBoolean(IS_SCRAPING_TIME_TRIGGER_ENABLED_CELL_NAME).unwrap();
 
         if (wasTimeTriggered && !isTimeTriggerEnabled) {
             return false;
         }
 
-        return this.getCellValue(IS_SCRAPING_ENABLED_CELL_NAME, isBoolean).unwrap();
+        return this.getCellBoolean(IS_SCRAPING_ENABLED_CELL_NAME).unwrap();
     }
 
     public isRowEnabled(row: ETFScrapingTableRow): boolean {
         const { isEnabledCellName } = row;
 
-        return this.getCellValue(isEnabledCellName, Type.isBoolean).unwrap();
+        return this.getCellBoolean(isEnabledCellName).unwrap();
     }
 
     public retryUpdateUrl(row: ETFScrapingTableRow): void {
         const { etfCellName } = row;
 
-        const etf = this.getCellValue(etfCellName, Type.isNonEmptyString).unwrap();
+        const etf = this.getCellString(etfCellName).unwrap();
 
         Utils.alert(`${etf}: Retrying with new URL`);
 
@@ -55,8 +59,8 @@ class ScrapingGoogleSheet extends GoogleSheet {
     public updateUrl(row: ETFScrapingTableRow): void {
         const { slugCellName, urlCellName } = row;
 
-        const domain = this.getCellValue(SCRAPING_DOMAIN_CELL_NAME, Type.isNonEmptyString).unwrap();
-        const slug = this.getCellValue(slugCellName, Type.isNonEmptyString).unwrap();
+        const domain = this.getCellString(SCRAPING_DOMAIN_CELL_NAME).unwrap();
+        const slug = this.getCellString(slugCellName).unwrap();
 
         const url = Utils.createUrl(domain, slug);
         const uniqueUrl = Utils.createUniqueURL(url);

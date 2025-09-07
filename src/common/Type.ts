@@ -1,17 +1,21 @@
-/* eslint @typescript-eslint/member-ordering: ["warn", { default: { order: "natural-case-insensitive" } }] */
-
 abstract class Type {
+    static boolean = () => Type.isBoolean;
+
+    static nonEmptyString = () => Type.isNonEmptyString;
+
+    static numberArray = () => Type.isArrayOf(Type.isNumber);
+
     static isArray = (value: unknown): value is unknown[] => {
         return Array.isArray(value);
     };
 
     static isArrayOf = <T>(isTypeOK: IsTypeOK<T>): IsTypeOK<T[]> => {
         //
-        function isArrayOfType(values: unknown): values is NotError<T>[] {
+        const isArray = (values: unknown): values is NotError<T>[] => {
             return Type.isArray(values) && values.every(isTypeOK);
-        }
+        };
 
-        return isArrayOfType;
+        return isArray;
     };
 
     static isBoolean = (value: unknown): value is boolean => {
@@ -37,10 +41,6 @@ abstract class Type {
 
     static isNumber = (value: unknown): value is number => {
         return typeof value === "number";
-    };
-
-    static isNumberArray = (values: unknown): values is number[] => {
-        return Type.isArray(values) && values.every(Type.isNumber);
     };
 
     static isObject = (value: unknown): value is NonNullable<object> => {

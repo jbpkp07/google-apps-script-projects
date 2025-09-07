@@ -100,6 +100,7 @@
                 ],
                 "prefer-template": "off",
                 "prettier/prettier": ["warn", {}, { "usePrettierrc": true }],
+                "sonarjs/prefer-immediate-return": "off",
                 "sort-imports": ["warn", { "ignoreCase": true, "ignoreDeclarationSort": true }]
             },
             "settings": {

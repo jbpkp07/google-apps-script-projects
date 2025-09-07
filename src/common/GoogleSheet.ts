@@ -1,6 +1,9 @@
 /// <reference path="./types.ts" />
 /// <reference path="./Either.ts" />
 
+type GetCellValue<T> = (cellName: string) => Either<T>;
+type GetRowValues<T> = (rangeName: string) => Either<T[]>;
+
 class GoogleSheet {
     private readonly _sheet: Sheet;
 
@@ -23,20 +26,30 @@ class GoogleSheet {
         return this._sheet.getRange(rangeName) ?? null;
     }
 
-    public getCellValue<T>(cellName: string, isTypeOK: IsTypeOK<T>): Either<T> {
-        const value: unknown = this.getRange(cellName)?.getValue();
+    public getCellValueOf<T>(isTypeOK: IsTypeOK<T>): GetCellValue<T> {
+        //
+        const getCellValue = (cellName: string): Either<T> => {
+            const value: unknown = this.getRange(cellName)?.getValue();
 
-        return isTypeOK(value)
-            ? Either.new(value)
-            : Either.newError(`Value at "${cellName}" is either missing or the wrong type`);
+            return isTypeOK(value)
+                ? Either.new(value)
+                : Either.newError(`Value at "${cellName}" is either missing or the wrong type`);
+        };
+
+        return getCellValue;
     }
 
-    public getRowValues<T>(rangeName: string, isTypeOK: IsTypeOK<T[]>): Either<T[]> {
-        const values: unknown[] | undefined = this.getRange(rangeName)?.getValues()[0];
+    public getRowValuesOf<T>(isTypeOK: IsTypeOK<T[]>): GetRowValues<T> {
+        //
+        const getRowValues = (rangeName: string): Either<T[]> => {
+            const values: unknown[] | undefined = this.getRange(rangeName)?.getValues()[0];
 
-        return isTypeOK(values)
-            ? Either.new(values)
-            : Either.newError(`Row values at "${rangeName}" are either missing or the wrong type`);
+            return isTypeOK(values)
+                ? Either.new(values)
+                : Either.newError(`Row values at "${rangeName}" are either missing or the wrong type`);
+        };
+
+        return getRowValues;
     }
 
     public setCellValue(cellName: string, value: string | number | boolean): Either<undefined> {
