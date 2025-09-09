@@ -1,21 +1,34 @@
 abstract class Type {
+    // nouns
     static boolean = () => Type.isBoolean;
 
-    static nonEmptyString = () => Type.isNonEmptyString;
+    static number = () => Type.isNumber;
 
-    static numberArray = () => Type.isArrayOf(Type.isNumber);
+    static numberArray = () => Type.isArrayOf(Type.number());
 
+    static stringOfMinLength = (length: number) => Type.isStringOfMinLength(length);
+
+    // questions
     static isArray = (value: unknown): value is unknown[] => {
         return Array.isArray(value);
     };
 
-    static isArrayOf = <T>(isTypeOK: IsTypeOK<T>): IsTypeOK<T[]> => {
+    static isArrayOf = <T>(isTypeOK: IsTypeOK<T>): IsArrayOK<T> => {
         //
-        const isArray = (values: unknown): values is NotError<T>[] => {
-            return Type.isArray(values) && values.every(isTypeOK);
+        const isArray = (value: unknown): value is NotError<T>[] => {
+            return Type.isArray(value) && value.every(isTypeOK);
         };
 
         return isArray;
+    };
+
+    static isBasicRecord = (value: unknown): value is NotError<BasicRecord> => {
+        return (
+            Type.isObject(value) &&
+            !Type.isArray(value) &&
+            !Type.isError(value) &&
+            Object.keys(value).every(Type.isStringOfMinLength(1))
+        );
     };
 
     static isBoolean = (value: unknown): value is boolean => {
@@ -26,17 +39,8 @@ abstract class Type {
         return value instanceof Error;
     };
 
-    static isNonEmptyRecord = (value: unknown): value is BasicRecord => {
-        return (
-            Type.isObject(value) &&
-            !Type.isArray(value) &&
-            Object.keys(value).length > 0 &&
-            Object.keys(value).every(Type.isNonEmptyString)
-        );
-    };
-
-    static isNonEmptyString = (value: unknown): value is string => {
-        return typeof value === "string" && value.length > 0;
+    static isNonEmptyRecord = (value: unknown): value is NotError<BasicRecord> => {
+        return Type.isBasicRecord(value) && Object.keys(value).length > 0;
     };
 
     static isNumber = (value: unknown): value is number => {
@@ -49,5 +53,14 @@ abstract class Type {
 
     static isString = (value: unknown): value is string => {
         return typeof value === "string";
+    };
+
+    static isStringOfMinLength = (length: number): IsStringOK => {
+        //
+        const isString = (value: unknown): value is string => {
+            return Type.isString(value) && value.length >= length;
+        };
+
+        return isString;
     };
 }

@@ -1,6 +1,7 @@
 /// <reference path="./types.ts" />
 /// <reference path="./consts.ts" />
 /// <reference path="../common/Type.ts" />
+/// <reference path="./ApiType.ts" />
 /// <reference path="../common/Utils.ts" />
 /// <reference path="../common/Either.ts" />
 /// <reference path="../common/GoogleSheet.ts" />
@@ -9,7 +10,7 @@
 class ScrapingGoogleSheet extends GoogleSheet {
     private getCellBoolean = this.getCellValueOf(Type.boolean());
 
-    private getCellString = this.getCellValueOf(Type.nonEmptyString());
+    private getCellString = this.getCellValueOf(Type.stringOfMinLength(1));
 
     private getRowNumberArray = this.getRowValuesOf(Type.numberArray());
 

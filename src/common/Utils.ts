@@ -1,9 +1,5 @@
 /// <reference path="./Type.ts" />
 
-/* eslint @typescript-eslint/member-ordering: ["warn", { default: { order: "natural-case-insensitive" } }] */
-
-type FetchResponse<T> = (url: string) => Either<T>;
-
 abstract class Utils {
     static alert = (anything: unknown): void => {
         const message = Utils.stringify(anything);
@@ -99,35 +95,4 @@ abstract class Utils {
     };
 }
 
-// type Price = {
-//     name: string;
-//     postmarketPrice: number;
-//     // eslint-disable-next-line @typescript-eslint/member-ordering
-//     postmarketChange: number;
-//     postmarketChangePercent: number;
-// };
-
-// const isPrice = (price: unknown): price is Price => {
-//     return (
-//         Type.isNonEmptyRecord(price) &&
-//         Type.isNonEmptyString(price.name) &&
-//         Type.isNumber(price.postmarketPrice) &&
-//         Type.isNumber(price.postmarketChange) &&
-//         Type.isNumber(price.postmarketChangePercent)
-//     );
-// };
-
-// type PricesResponse = {
-//     status: number;
-//     // eslint-disable-next-line @typescript-eslint/member-ordering
-//     data: Price[];
-// };
-
-// function isPricesResponse(response: unknown): response is PricesResponse {
-//     return (
-//         // prettier-ignore
-//         Type.isNonEmptyRecord(response) &&
-//         Type.isNumber(response.status) &&
-//         Type.isArrayOf(isPrice)(response.data)
-//     );
-// }
+/* eslint @typescript-eslint/member-ordering: ["warn", { default: { order: "natural" } }] */

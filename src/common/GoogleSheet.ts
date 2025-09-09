@@ -1,9 +1,6 @@
 /// <reference path="./types.ts" />
 /// <reference path="./Either.ts" />
 
-type GetCellValue<T> = (cellName: string) => Either<T>;
-type GetRowValues<T> = (rangeName: string) => Either<T[]>;
-
 class GoogleSheet {
     private readonly _sheet: Sheet;
 

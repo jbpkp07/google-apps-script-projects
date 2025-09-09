@@ -55,15 +55,16 @@
             ],
             "rules": {
                 "@typescript-eslint/ban-types": ["warn", { "types": { "Function": false } }],
+                "@typescript-eslint/no-namespace": "off",
+                "@typescript-eslint/no-unused-vars": [
+                    "warn",
+                    { "varsIgnorePattern": "^(handler|populateScrapingUrls|GoogleSheet|Either|Utils|Type)$" }
+                ],
                 "@typescript-eslint/no-use-before-define": [
                     "warn",
                     { "functions": false, "classes": false, "variables": true, "allowNamedExports": false }
                 ],
                 "@typescript-eslint/triple-slash-reference": "off",
-                "@typescript-eslint/no-unused-vars": [
-                    "warn",
-                    { "varsIgnorePattern": "^(handler|populateScrapingUrls|Type|Utils|Either|GoogleSheet)$" }
-                ],
                 "class-methods-use-this": "off",
                 "import/order": [
                     "warn",
