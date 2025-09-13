@@ -28,7 +28,7 @@ class Either<T> {
         return this._value;
     }
 
-    public unwrap(): NotError<T> {
+    public unwrap(): ThrowsOrReturns<NotError<T>> {
         if (Type.isError(this._value)) {
             throw this._value;
         }
@@ -40,7 +40,7 @@ class Either<T> {
         return !Type.isError(this._value);
     }
 
-    public assertOK(): void {
+    public assertOK(): ThrowsOrReturns<void> {
         if (Type.isError(this._value)) {
             throw this._value;
         }

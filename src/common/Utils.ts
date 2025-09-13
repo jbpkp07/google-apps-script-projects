@@ -1,6 +1,23 @@
 /// <reference path="./Type.ts" />
 
 abstract class Utils {
+    private static _fetchData = <T>(url: string, isTypeOK?: IsTypeOK<T>): Either<T> => {
+        try {
+            const json: string = UrlFetchApp.fetch(url).getContentText();
+            const data: unknown = JSON.parse(json);
+
+            if (!isTypeOK) {
+                return Either.new(data as NotError<T>);
+            }
+
+            return isTypeOK(data)
+                ? Either.new(data)
+                : Either.newError(`Fetched bad data from ${url}; Data: ${Utils.stringify(data)}`);
+        } catch (error) {
+            return Either.fromError(error);
+        }
+    };
+
     static alert = (anything: unknown): void => {
         const message = Utils.stringify(anything);
         const timeStampMessage = Utils.createTimeStampMessage(message);
@@ -39,22 +56,17 @@ abstract class Utils {
         return Utils.trim(domain, "/") + "/" + Utils.trim(slug, "/");
     };
 
-    static fetchResponseOf = <T>(isTypeOK: IsTypeOK<T>): FetchResponse<T> => {
-        //
-        const fetchResponse = (url: string): Either<T> => {
-            try {
-                const response = UrlFetchApp.fetch(url).getContentText();
-                const parsedResponse: unknown = JSON.parse(response);
+    static fetchData = (url: string): Either<unknown> => {
+        return this._fetchData<unknown>(url);
+    };
 
-                return isTypeOK(parsedResponse)
-                    ? Either.new(parsedResponse)
-                    : Either.newError(`Fetched wrong type from ${url}; Response: ${response}`);
-            } catch (error) {
-                return Either.fromError(error);
-            }
+    static fetchDataOf = <T>(isTypeOK: IsTypeOK<T>): FetchData<T> => {
+        //
+        const fetchData = (url: string): Either<T> => {
+            return this._fetchData<T>(url, isTypeOK);
         };
 
-        return fetchResponse;
+        return fetchData;
     };
 
     static getCurrentTime = (): string => {

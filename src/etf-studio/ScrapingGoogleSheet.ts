@@ -24,7 +24,7 @@ class ScrapingGoogleSheet extends GoogleSheet {
         return this.getRowNumberArray(scrapeResultsRangeName);
     }
 
-    public isScrapingEnabled(event?: TimeDrivenEvent): boolean {
+    public isScrapingEnabled(event?: TimeDrivenEvent): ThrowsOrReturns<boolean> {
         const wasTimeTriggered = !!event?.triggerUid;
         const isTimeTriggerEnabled = this.getCellBoolean(IS_SCRAPING_TIME_TRIGGER_ENABLED_CELL_NAME).unwrap();
 
@@ -35,13 +35,13 @@ class ScrapingGoogleSheet extends GoogleSheet {
         return this.getCellBoolean(IS_SCRAPING_ENABLED_CELL_NAME).unwrap();
     }
 
-    public isRowEnabled(row: ETFScrapingTableRow): boolean {
+    public isRowEnabled(row: ETFScrapingTableRow): ThrowsOrReturns<boolean> {
         const { isEnabledCellName } = row;
 
         return this.getCellBoolean(isEnabledCellName).unwrap();
     }
 
-    public retryUpdateUrl(row: ETFScrapingTableRow): void {
+    public retryUpdateUrl(row: ETFScrapingTableRow): ThrowsOrReturns<void> {
         const { etfCellName } = row;
 
         const etf = this.getCellString(etfCellName).unwrap();
@@ -51,13 +51,13 @@ class ScrapingGoogleSheet extends GoogleSheet {
         this.updateUrl(row);
     }
 
-    public updateLastScrapedTime(): void {
+    public updateLastScrapedTime(): ThrowsOrReturns<void> {
         const currentTime = Utils.getCurrentTime();
 
         this.setCellValue(LAST_SCRAPED_TIME_CELL_NAME, currentTime).assertOK();
     }
 
-    public updateUrl(row: ETFScrapingTableRow): void {
+    public updateUrl(row: ETFScrapingTableRow): ThrowsOrReturns<void> {
         const { slugCellName, urlCellName } = row;
 
         const domain = this.getCellString(SCRAPING_DOMAIN_CELL_NAME).unwrap();
