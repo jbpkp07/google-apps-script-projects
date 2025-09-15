@@ -1,22 +1,49 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 namespace StockAnalysisApi {
-    export type Price = {
-        name: string;
-        postmarketPrice: number;
-        postmarketChange: number;
-        postmarketChangePercent: number;
+    export type MarketPrice = {
+        name: string; // `!${Ticker}` format
+        price?: number;
+        chg?: number; // price $ change
+        change?: number; // price % change
+        volume?: number;
     };
 
-    export type PricesResponse = {
+    export type MarketPriceData = {
         status: number;
-        data: Price[];
+        data: MarketPrice[];
+    };
+
+    export type PreMarketPrice = {
+        name: string;
+        premarketPrice?: number;
+        premarketChange?: number;
+        premarketChangePercent?: number;
+    };
+
+    export type PreMarketPriceData = {
+        status: number;
+        data: PreMarketPrice[];
+    };
+
+    export type PostMarketPrice = {
+        name: string;
+        postmarketPrice?: number;
+        postmarketChange?: number;
+        postmarketChangePercent?: number;
+    };
+
+    export type PostMarketPriceData = {
+        status: number;
+        data: PostMarketPrice[];
     };
 }
 
-type Price = StockAnalysisApi.Price;
-
-type PricesResponse = StockAnalysisApi.PricesResponse;
+type DayPrice = {
+    ticker: string;
+    price: number;
+    changePercent: number;
+};
 
 type ETFScrapingTableRow = {
     etfCellName: string;

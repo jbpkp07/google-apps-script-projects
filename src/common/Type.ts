@@ -47,6 +47,10 @@ abstract class Type {
         return typeof value === "number";
     };
 
+    static isNumberOrUndefined = (value: unknown): value is number | undefined => {
+        return Type.isNumber(value) || Type.isUndefined(value);
+    };
+
     static isObject = (value: unknown): value is NonNullable<object> => {
         return typeof value === "object" && value !== null;
     };
@@ -62,5 +66,9 @@ abstract class Type {
         };
 
         return isString;
+    };
+
+    static isUndefined = (value: unknown): value is undefined => {
+        return value === undefined;
     };
 }
