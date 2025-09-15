@@ -58,7 +58,9 @@
                 "@typescript-eslint/no-namespace": "off",
                 "@typescript-eslint/no-unused-vars": [
                     "warn",
-                    { "varsIgnorePattern": "^(handler|populateScrapingUrls|GoogleSheet|Either|Utils|Type)$" }
+                    {
+                        "varsIgnorePattern": "^(handler|populateScrapingUrls|fetchPriceData|GoogleSheet|Either|Utils|Type)$"
+                    }
                 ],
                 "@typescript-eslint/no-use-before-define": [
                     "warn",
@@ -85,7 +87,7 @@
                 "no-console": "off",
                 "no-plusplus": ["warn", { "allowForLoopAfterthoughts": true }],
                 "no-restricted-syntax": ["warn", "ForInStatement", "LabeledStatement", "WithStatement"],
-                "no-underscore-dangle": ["warn", { "allowAfterThis": true, "enforceInMethodNames": true }],
+                "no-underscore-dangle": "off",
                 "no-void": "off",
                 "padding-line-between-statements": [
                     "error",

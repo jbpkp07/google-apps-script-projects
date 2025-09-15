@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 const SCRAPING_SHEET_NAME = "Scraping";
+const FETCHING_SHEET_NAME = "Fetching";
 
 const IS_SCRAPING_ENABLED_CELL_NAME = "B3";
 const IS_SCRAPING_TIME_TRIGGER_ENABLED_CELL_NAME = "B4";

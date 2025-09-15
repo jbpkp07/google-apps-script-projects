@@ -1,7 +1,13 @@
+/// <reference path="./types.ts" />
 /// <reference path="../common/types.ts" />
 /// <reference path="./consts.ts" />
+/// <reference path="../common/Type.ts" />
+/// <reference path="./ApiType.ts" />
 /// <reference path="../common/Utils.ts" />
+/// <reference path="../common/Either.ts" />
+/// <reference path="../common/GoogleSheet.ts" />
 /// <reference path="./ScrapingGoogleSheet.ts" />
+/// <reference path="./FetchingGoogleSheet.ts" />
 
 function populateScrapingUrls(event?: TimeDrivenEvent): void {
     try {
@@ -26,6 +32,18 @@ function populateScrapingUrls(event?: TimeDrivenEvent): void {
                 }
             }
         }
+
+        Utils.logToCloud("Success");
+    } catch (error) {
+        Utils.alert(error);
+    }
+}
+
+function fetchPriceData(event?: TimeDrivenEvent): void {
+    try {
+        const sheet = new FetchingGoogleSheet();
+
+        console.log(event, sheet);
 
         Utils.logToCloud("Success");
     } catch (error) {

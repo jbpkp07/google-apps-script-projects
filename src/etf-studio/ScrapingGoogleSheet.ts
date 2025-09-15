@@ -1,9 +1,4 @@
-/// <reference path="./types.ts" />
-/// <reference path="./consts.ts" />
-/// <reference path="../common/Type.ts" />
-/// <reference path="./ApiType.ts" />
 /// <reference path="../common/Utils.ts" />
-/// <reference path="../common/Either.ts" />
 /// <reference path="../common/GoogleSheet.ts" />
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
