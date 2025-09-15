@@ -57,13 +57,13 @@ abstract class Utils {
     };
 
     static fetchData = (url: string): Either<unknown> => {
-        return this._fetchData<unknown>(url);
+        return Utils._fetchData<unknown>(url);
     };
 
     static fetchDataOf = <T>(isTypeOK: IsTypeOK<T>): FetchData<T> => {
         //
         const fetchData = (url: string): Either<T> => {
-            return this._fetchData<T>(url, isTypeOK);
+            return Utils._fetchData<T>(url, isTypeOK);
         };
 
         return fetchData;
