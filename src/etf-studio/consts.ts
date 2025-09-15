@@ -1,5 +1,3 @@
-/// <reference path="./types.ts" />
-
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 const SCRAPING_SHEET_NAME = "Scraping";

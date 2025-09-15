@@ -23,7 +23,7 @@
         "clean:dist": "rm -rf ./dist",
         "prettify:dist": "eslint --fix ./dist --max-warnings=0",
         "rollback:dist": "npm run clean:dist -s && exit 1",
-        "start:dev": "npm run clean:cache -s && ts-node-dev --cache-directory .cache --respawn --rs --cls --project",
+        "start": "npm run clean:cache -s && ts-node-dev --cache-directory .cache --respawn --rs --cls --project",
         "start:common": "npm run start:dev -s ./src/common/tsconfig.json --",
         "start:etf-studio": "npm run start:dev -s ./src/etf-studio/tsconfig.json --",
         "start:project-template": "npm run start:dev -s ./src/project-template/tsconfig.json --"
