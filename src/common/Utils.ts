@@ -1,4 +1,5 @@
 /// <reference path="./Type.ts" />
+/// <reference path="./Either.ts" />
 
 abstract class Utils {
     private static _fetchData = <T>(url: string, isTypeOK?: IsTypeOK<T>): Either<T> => {

@@ -1,5 +1,6 @@
-/// <reference path="./types.ts" />
+/// <reference path="./Type.ts" />
 /// <reference path="./Either.ts" />
+/// <reference path="./Utils.ts" />
 
 class GoogleSheet {
     private readonly _sheet: Sheet;

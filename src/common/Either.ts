@@ -1,4 +1,3 @@
-/// <reference path="./types.ts" />
 /// <reference path="./Type.ts" />
 
 class Either<T> {
@@ -19,9 +18,20 @@ class Either<T> {
     }
 
     static fromError<T>(error: unknown): Either<T> {
+        //
+        const stringify = (anything: unknown): string => {
+            if (anything instanceof Either) {
+                return stringify(anything.value());
+            }
+
+            const isSimple = Type.isError(anything) || !Type.isObject(anything);
+
+            return isSimple ? String(anything) : JSON.stringify(anything);
+        };
+
         return Type.isError(error) // prettier-ignore
             ? Either.new<T>(error)
-            : Either.newError(Utils.stringify(error));
+            : Either.newError(stringify(error));
     }
 
     public value(): Error | NotError<T> {

@@ -12,7 +12,8 @@
         "prebuild": "npm run clean:dist -s && npm run check:repo -s",
         "build": "npm run build:all-projects -s || npm run rollback:dist -s",
         "postbuild": "npm run prettify:dist -s || npm run rollback:dist -s",
-        "build:all-projects": "npm run build:project-template -s && npm run build:etf-studio -s",
+        "build:all-projects": "npm run build:common -s && npm run build:etf-studio -s && npm run build:project-template -s",
+        "build:common": "tsc -p ./src/common/tsconfig.json",
         "build:etf-studio": "tsc -p ./src/etf-studio/tsconfig.json",
         "build:project-template": "tsc -p ./src/project-template/tsconfig.json",
         "check:eslint": "eslint ./src --max-warnings=0",
@@ -23,6 +24,7 @@
         "prettify:dist": "eslint --fix ./dist --max-warnings=0",
         "rollback:dist": "npm run clean:dist -s && exit 1",
         "start:dev": "npm run clean:cache -s && ts-node-dev --cache-directory .cache --respawn --rs --cls --project",
+        "start:common": "npm run start:dev -s ./src/common/tsconfig.json --",
         "start:etf-studio": "npm run start:dev -s ./src/etf-studio/tsconfig.json --",
         "start:project-template": "npm run start:dev -s ./src/project-template/tsconfig.json --"
     },
