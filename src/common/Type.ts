@@ -39,6 +39,15 @@ abstract class Type {
         return value instanceof Error;
     };
 
+    static isLiteralOf = <T extends Literal>(literal: T): IsTypeOK<T> => {
+        //
+        const isLiteral = (value: unknown): value is NotError<T> => {
+            return value === literal;
+        };
+
+        return isLiteral;
+    };
+
     static isNonEmptyRecord = (value: unknown): value is NotError<BasicRecord> => {
         return Type.isBasicRecord(value) && Object.keys(value).length > 0;
     };

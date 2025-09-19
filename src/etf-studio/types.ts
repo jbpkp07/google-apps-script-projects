@@ -1,48 +1,58 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-namespace StockAnalysisApi {
-    export type MarketPrice = {
-        name: string; // `!${Ticker}` format
-        price?: number;
-        chg?: number; // price $ change
-        change?: number; // price % change
-        volume?: number;
-    };
+namespace StockAnalysis {
+    export namespace RealTimePricesAPI {
+        export type DaytimeData = {
+            name: string; // `!${ticker}` format
+            price?: number;
+            chg?: number; // $ change
+            change?: number; // % change
+            volume?: number;
+        };
 
-    export type MarketPriceData = {
-        status: number;
-        data: MarketPrice[];
-    };
+        export type DaytimeResponse = {
+            status: number;
+            data: DaytimeData[];
+        };
+    }
 
-    export type PreMarketPrice = {
-        name: string;
-        premarketPrice?: number;
-        premarketChange?: number;
-        premarketChangePercent?: number;
-    };
+    export namespace WatchListAPI {
+        export type Data = {
+            s: string; // `!${ticker}` format
+            n: string;
+            price?: number;
+            change?: number; // % change
+            volume?: number;
+            high52?: number;
+            high52ch?: number; // % change
+            curr: {
+                main: "USD";
+                price: "USD";
+                dividend: "USD";
+            };
+        };
 
-    export type PreMarketPriceData = {
-        status: number;
-        data: PreMarketPrice[];
-    };
-
-    export type PostMarketPrice = {
-        name: string;
-        postmarketPrice?: number;
-        postmarketChange?: number;
-        postmarketChangePercent?: number;
-    };
-
-    export type PostMarketPriceData = {
-        status: number;
-        data: PostMarketPrice[];
-    };
+        export type Response = {
+            status: number;
+            data: Data[];
+        };
+    }
 }
 
-type DayPrice = {
+type DaytimePricesData = StockAnalysis.RealTimePricesAPI.DaytimeData;
+type DaytimePricesResponse = StockAnalysis.RealTimePricesAPI.DaytimeResponse;
+
+type WatchListData = StockAnalysis.WatchListAPI.Data;
+type WatchListResponse = StockAnalysis.WatchListAPI.Response;
+
+type ETFData = {
     ticker: string;
-    price: number;
-    changePercent: number;
+    name?: string | undefined;
+    dayPrice?: number | undefined;
+    dayChangePercent?: number | undefined;
+    dayVolume?: number | undefined;
+    high52Price?: number | undefined;
+    high52ChangePercent?: number | undefined;
 };
 
 type ETFScrapingTableRow = {

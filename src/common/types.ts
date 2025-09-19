@@ -6,9 +6,9 @@ type Sheet = GoogleAppsScript.Spreadsheet.Sheet;
 
 type CellRange = GoogleAppsScript.Spreadsheet.Range;
 
-type ThrowsOrReturns<T> = T;
-
 type NotError<T> = T extends Error ? never : T;
+
+type ThrowsOrReturns<T> = NotError<T>;
 
 type IsTypeOK<T> = (value: unknown) => value is NotError<T>;
 
@@ -23,3 +23,5 @@ type GetRowValues<T> = (rangeName: string) => Either<T[]>;
 type FetchData<T> = (url: string) => Either<T>;
 
 type BasicRecord = Record<string, unknown>;
+
+type Literal = string | number | boolean;

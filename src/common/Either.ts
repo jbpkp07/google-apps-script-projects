@@ -38,7 +38,7 @@ class Either<T> {
         return this._value;
     }
 
-    public unwrap(): ThrowsOrReturns<NotError<T>> {
+    public unwrap(): ThrowsOrReturns<T> {
         if (Type.isError(this._value)) {
             throw this._value;
         }

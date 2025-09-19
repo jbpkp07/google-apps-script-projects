@@ -50,7 +50,7 @@ class GoogleSheet {
         return getRowValues;
     }
 
-    public setCellValue(cellName: string, value: string | number | boolean): Either<undefined> {
+    public setCellValue(cellName: string, value: Literal): Either<undefined> {
         const range: CellRange | undefined = this.getRange(cellName)?.setValue(value);
 
         return range?.getValue() === value
