@@ -3,7 +3,7 @@
 /// <reference path="./FetchingGoogleSheet.ts" />
 /// <reference path="./ScrapingGoogleSheet.ts" />
 
-function fetchPriceData(event?: TimeDrivenEvent): void {
+function fetchDaytimePrices(event?: TimeDrivenEvent): void {
     try {
         const sheet = new FetchingGoogleSheet();
 

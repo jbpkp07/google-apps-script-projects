@@ -18,9 +18,9 @@ class FetchingGoogleSheet extends GoogleSheet {
 
             return {
                 ticker: this.trimExclam(name),
-                dayPrice: price,
-                dayChangePercent: change,
-                dayVolume: volume
+                price,
+                changePercent: change,
+                volume
             };
         };
 
@@ -35,9 +35,9 @@ class FetchingGoogleSheet extends GoogleSheet {
             return {
                 ticker: this.trimExclam(s),
                 name: n,
-                dayPrice: price,
-                dayChangePercent: change,
-                dayVolume: volume,
+                price,
+                changePercent: change,
+                volume,
                 high52Price: high52,
                 high52ChangePercent: high52ch
             };

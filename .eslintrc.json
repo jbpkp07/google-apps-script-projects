@@ -59,7 +59,7 @@
                 "@typescript-eslint/no-unused-vars": [
                     "warn",
                     {
-                        "varsIgnorePattern": "^(handler|populateScrapingUrls|fetchPriceData|GoogleSheet|Either|Utils|Type)$"
+                        "varsIgnorePattern": "^(handler|populateScrapingUrls|fetchDaytimePrices|GoogleSheet|Either|Utils|Type)$"
                     }
                 ],
                 "@typescript-eslint/no-use-before-define": [

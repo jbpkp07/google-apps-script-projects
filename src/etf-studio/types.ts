@@ -48,12 +48,14 @@ type WatchListResponse = StockAnalysis.WatchListAPI.Response;
 type ETFData = {
     ticker: string;
     name?: string | undefined;
-    dayPrice?: number | undefined;
-    dayChangePercent?: number | undefined;
-    dayVolume?: number | undefined;
+    price?: number | undefined;
+    changePercent?: number | undefined;
+    volume?: number | undefined;
     high52Price?: number | undefined;
     high52ChangePercent?: number | undefined;
 };
+
+type ETFFetchingTableRow = Record<keyof ETFData, string>[];
 
 type ETFScrapingTableRow = {
     etfCellName: string;
