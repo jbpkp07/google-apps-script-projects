@@ -15,6 +15,10 @@ abstract class ApiType {
     // questions
     static isHttpStatusOK = Type.isLiteralOf(200);
 
+    static isTicker = (value: unknown): value is Ticker => {
+        return Type.isStringOfMinLength(1)(value) && TICKERS.includes(value as Ticker);
+    };
+
     static isDaytimePricesData = (value: unknown): value is DaytimePricesData => {
         const maybe = value as DaytimePricesData;
 

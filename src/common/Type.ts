@@ -48,6 +48,10 @@ abstract class Type {
         return isLiteral;
     };
 
+    static isNonEmptyLiteral = (value: unknown): value is Literal => {
+        return Type.isStringOfMinLength(1)(value) || Type.isNumber(value) || Type.isBoolean(value);
+    };
+
     static isNonEmptyRecord = (value: unknown): value is NotError<BasicRecord> => {
         return Type.isBasicRecord(value) && Object.keys(value).length > 0;
     };

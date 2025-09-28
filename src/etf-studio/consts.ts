@@ -32,7 +32,7 @@ const LAST_FETCHED_TIME_CELL_NAME = "B5";
 const DAYTIME_PRICES_URL_CELL_NAME = "B12";
 const WATCH_LIST_URL_CELL_NAME = "B24";
 
-const TICKERS: Tickers = ["QQQM", "SPMO", "SPY", "FDVV", "MGV", "XMMO", "SPMD", "RWK", "XSMO", "RWJ", "AVUV"] as const;
+const TICKERS = ["QQQM", "SPMO", "SPY", "FDVV", "MGV", "XMMO", "SPMD", "RWK", "XSMO", "RWJ", "AVUV"] as const satisfies Tickers;
 
 // prettier-ignore
 const ETF_FETCHING_TABLE_CELL_NAMES = {
