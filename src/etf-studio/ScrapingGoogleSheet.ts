@@ -3,12 +3,6 @@
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 class ScrapingGoogleSheet extends GoogleSheet {
-    private getCellBoolean = this.getCellValueOf(Type.boolean());
-
-    private getCellString = this.getCellValueOf(Type.stringOfMinLength(1));
-
-    private getRowNumberArray = this.getRowValuesOf(Type.numberArray());
-
     constructor() {
         super(SCRAPING_SHEET_NAME);
     }
@@ -16,30 +10,30 @@ class ScrapingGoogleSheet extends GoogleSheet {
     public getScrapeResults(row: ETFScrapingTableRow): Either<number[]> {
         const { scrapeResultsRangeName } = row;
 
-        return this.getRowNumberArray(scrapeResultsRangeName);
+        return super.getRowNumberArray(scrapeResultsRangeName);
     }
 
     public isScrapingEnabled(event?: TimeDrivenEvent): ThrowsOrReturns<boolean> {
         const wasTimeTriggered = !!event?.triggerUid;
-        const isTimeTriggerEnabled = this.getCellBoolean(IS_SCRAPING_TIME_TRIGGER_ENABLED_CELL_NAME).unwrap();
+        const isTimeTriggerEnabled = super.getCellBoolean(IS_SCRAPING_TIME_TRIGGER_ENABLED_CELL_NAME).unwrap();
 
         if (wasTimeTriggered && !isTimeTriggerEnabled) {
             return false;
         }
 
-        return this.getCellBoolean(IS_SCRAPING_ENABLED_CELL_NAME).unwrap();
+        return super.getCellBoolean(IS_SCRAPING_ENABLED_CELL_NAME).unwrap();
     }
 
     public isRowEnabled(row: ETFScrapingTableRow): ThrowsOrReturns<boolean> {
         const { isEnabledCellName } = row;
 
-        return this.getCellBoolean(isEnabledCellName).unwrap();
+        return super.getCellBoolean(isEnabledCellName).unwrap();
     }
 
     public retryUpdateUrl(row: ETFScrapingTableRow): ThrowsOrReturns<void> {
         const { etfCellName } = row;
 
-        const etf = this.getCellString(etfCellName).unwrap();
+        const etf = super.getCellString(etfCellName).unwrap();
 
         Utils.alert(`${etf}: Retrying with new URL`);
 
@@ -49,18 +43,18 @@ class ScrapingGoogleSheet extends GoogleSheet {
     public updateLastScrapedTime(): ThrowsOrReturns<void> {
         const currentTime = Utils.getCurrentTime();
 
-        this.setCellValue(LAST_SCRAPED_TIME_CELL_NAME, currentTime).assertOK();
+        super.setCellValue(LAST_SCRAPED_TIME_CELL_NAME, currentTime).assertOK();
     }
 
     public updateUrl(row: ETFScrapingTableRow): ThrowsOrReturns<void> {
         const { slugCellName, urlCellName } = row;
 
-        const domain = this.getCellString(SCRAPING_DOMAIN_CELL_NAME).unwrap();
-        const slug = this.getCellString(slugCellName).unwrap();
+        const domain = super.getCellString(SCRAPING_DOMAIN_CELL_NAME).unwrap();
+        const slug = super.getCellString(slugCellName).unwrap();
 
         const url = Utils.createUrl(domain, slug);
         const uniqueUrl = Utils.createUniqueURL(url);
 
-        this.setCellValue(urlCellName, uniqueUrl).assertOK();
+        super.setCellValue(urlCellName, uniqueUrl).assertOK();
     }
 }

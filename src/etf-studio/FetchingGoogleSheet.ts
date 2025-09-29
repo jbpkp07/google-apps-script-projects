@@ -1,4 +1,5 @@
 /// <reference path="./consts.ts" />
+/// <reference path="./Mappers.ts" />
 /// <reference path="../common/GoogleSheet.ts" />
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -7,54 +8,50 @@ class FetchingGoogleSheet extends GoogleSheet {
         super(FETCHING_SHEET_NAME);
     }
 
-    private trimExclam(str: string): string {
-        return Utils.trim(str, "!");
+    private updateSheet(fetchResults: ETFData[]): ThrowsOrReturns<void> {
+        for (const etfData of fetchResults) {
+            for (const { value, cellName } of Object.values(etfData)) {
+                if (Type.isNonEmptyLiteral(value)) {
+                    super.setCellValue(cellName, value).assertOK();
+                }
+            }
+        }
     }
 
-    private mapPricesToETFData(response: DaytimePricesResponse): ETFData[] {
-        //
-        const toETFData = (data: DaytimePricesData): ETFData => {
-            const { name, price, change, volume } = data;
+    public fetchDaytimePrices(): ThrowsOrReturns<void> {
+        const url = super.getCellString(DAYTIME_PRICES_URL_CELL_NAME).unwrap();
 
-            return {
-                ticker: this.trimExclam(name),
-                price,
-                changePercent: change,
-                volume
-            };
-        };
-
-        return response.data.map(toETFData);
-    }
-
-    private mapWatchListToETFData(response: WatchListResponse): ETFData[] {
-        //
-        const toETFData = (data: WatchListData): ETFData => {
-            const { s, n, price, change, volume, high52, high52ch } = data;
-
-            return {
-                ticker: this.trimExclam(s),
-                name: n,
-                price,
-                changePercent: change,
-                volume,
-                high52Price: high52,
-                high52ChangePercent: high52ch
-            };
-        };
-
-        return response.data.map(toETFData);
-    }
-
-    public fetchDaytimePrices(url: string): ThrowsOrReturns<ETFData[]> {
         const response = Utils.fetchDataOf(ApiType.DaytimePricesResponse())(url).unwrap();
 
-        return this.mapPricesToETFData(response);
+        const etfData = Mappers.mapPricesToETFData(response);
+
+        this.updateSheet(etfData);
     }
 
-    public fetchWatchListData(url: string): ThrowsOrReturns<ETFData[]> {
+    public fetchWatchListData(): ThrowsOrReturns<void> {
+        const url = super.getCellString(WATCH_LIST_URL_CELL_NAME).unwrap();
+
         const response = Utils.fetchDataOf(ApiType.WatchListResponse())(url).unwrap();
 
-        return this.mapWatchListToETFData(response);
+        const etfData = Mappers.mapWatchListToETFData(response);
+
+        this.updateSheet(etfData);
+    }
+
+    public isFetchingEnabled(event?: TimeDrivenEvent): ThrowsOrReturns<boolean> {
+        const wasTimeTriggered = !!event?.triggerUid;
+        const isTimeTriggerEnabled = super.getCellBoolean(IS_FETCHING_TIME_TRIGGER_ENABLED_CELL_NAME).unwrap();
+
+        if (wasTimeTriggered && !isTimeTriggerEnabled) {
+            return false;
+        }
+
+        return super.getCellBoolean(IS_FETCHING_ENABLED_CELL_NAME).unwrap();
+    }
+
+    public updateLastFetchedTime(): ThrowsOrReturns<void> {
+        const currentTime = Utils.getCurrentTime();
+
+        super.setCellValue(LAST_FETCHED_TIME_CELL_NAME, currentTime).assertOK();
     }
 }

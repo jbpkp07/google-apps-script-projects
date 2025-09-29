@@ -49,10 +49,6 @@ type Tickers = readonly ["QQQM", "SPMO", "SPY", "FDVV", "MGV", "XMMO", "SPMD", "
 type Ticker = Tickers[number];
 
 type ETFData = Readonly<{
-    ticker: {
-        value: Ticker;
-        cellName: string;
-    };
     name?: {
         value?: string | undefined;
         cellName: string;

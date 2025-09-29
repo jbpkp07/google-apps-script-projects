@@ -24,7 +24,7 @@ class GoogleSheet {
         return this._sheet.getRange(rangeName) ?? null;
     }
 
-    public getCellValueOf<T>(isTypeOK: IsTypeOK<T>): GetCellValue<T> {
+    private getCellValueOf<T>(isTypeOK: IsTypeOK<T>): GetCellValue<T> {
         //
         const getCellValue = (cellName: string): Either<T> => {
             const value: unknown = this.getRange(cellName)?.getValue();
@@ -37,7 +37,7 @@ class GoogleSheet {
         return getCellValue;
     }
 
-    public getRowValuesOf<T>(isTypeOK: IsTypeOK<T[]>): GetRowValues<T> {
+    private getRowValuesOf<T>(isTypeOK: IsTypeOK<T[]>): GetRowValues<T> {
         //
         const getRowValues = (rangeName: string): Either<T[]> => {
             const values: unknown[] | undefined = this.getRange(rangeName)?.getValues()[0];
@@ -57,4 +57,10 @@ class GoogleSheet {
             ? Either.new(undefined)
             : Either.newError(`Failed setting value ("${String(value)}" type ${typeof value}) at cell "${cellName}"`);
     }
+
+    public getCellBoolean = this.getCellValueOf(Type.boolean());
+
+    public getCellString = this.getCellValueOf(Type.stringOfMinLength(1));
+
+    public getRowNumberArray = this.getRowValuesOf(Type.numberArray());
 }

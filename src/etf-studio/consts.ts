@@ -36,15 +36,15 @@ const TICKERS = ["QQQM", "SPMO", "SPY", "FDVV", "MGV", "XMMO", "SPMD", "RWK", "X
 
 // prettier-ignore
 const ETF_FETCHING_TABLE_CELL_NAMES = {
-    QQQM: { ticker: "QQQM", name: "B28", price: "E28", changePercent: "F28", volume: "G28", high52Price: "H28", high52ChangePercent: "I28" },
-    SPMO: { ticker: "SPMO", name: "B29", price: "E29", changePercent: "F29", volume: "G29", high52Price: "H29", high52ChangePercent: "I29" },
-    SPY:  { ticker: "SPY",  name: "B30", price: "E30", changePercent: "F30", volume: "G30", high52Price: "H30", high52ChangePercent: "I30" },
-    FDVV: { ticker: "FDVV", name: "B31", price: "E31", changePercent: "F31", volume: "G31", high52Price: "H31", high52ChangePercent: "I31" },
-    MGV:  { ticker: "MGV",  name: "B32", price: "E32", changePercent: "F32", volume: "G32", high52Price: "H32", high52ChangePercent: "I32" },
-    XMMO: { ticker: "XMMO", name: "B33", price: "E33", changePercent: "F33", volume: "G33", high52Price: "H33", high52ChangePercent: "I33" },
-    SPMD: { ticker: "SPMD", name: "B34", price: "E34", changePercent: "F34", volume: "G34", high52Price: "H34", high52ChangePercent: "I34" },
-    RWK:  { ticker: "RWK",  name: "B35", price: "E35", changePercent: "F35", volume: "G35", high52Price: "H35", high52ChangePercent: "I35" },
-    XSMO: { ticker: "XSMO", name: "B36", price: "E36", changePercent: "F36", volume: "G36", high52Price: "H36", high52ChangePercent: "I36" },
-    RWJ:  { ticker: "RWJ",  name: "B37", price: "E37", changePercent: "F37", volume: "G37", high52Price: "H37", high52ChangePercent: "I37" },
-    AVUV: { ticker: "AVUV", name: "B38", price: "E38", changePercent: "F38", volume: "G38", high52Price: "H38", high52ChangePercent: "I38" }
+    QQQM: { name: "B28", price: "E28", changePercent: "F28", volume: "G28", high52Price: "H28", high52ChangePercent: "I28" },
+    SPMO: { name: "B29", price: "E29", changePercent: "F29", volume: "G29", high52Price: "H29", high52ChangePercent: "I29" },
+    SPY:  { name: "B30", price: "E30", changePercent: "F30", volume: "G30", high52Price: "H30", high52ChangePercent: "I30" },
+    FDVV: { name: "B31", price: "E31", changePercent: "F31", volume: "G31", high52Price: "H31", high52ChangePercent: "I31" },
+    MGV:  { name: "B32", price: "E32", changePercent: "F32", volume: "G32", high52Price: "H32", high52ChangePercent: "I32" },
+    XMMO: { name: "B33", price: "E33", changePercent: "F33", volume: "G33", high52Price: "H33", high52ChangePercent: "I33" },
+    SPMD: { name: "B34", price: "E34", changePercent: "F34", volume: "G34", high52Price: "H34", high52ChangePercent: "I34" },
+    RWK:  { name: "B35", price: "E35", changePercent: "F35", volume: "G35", high52Price: "H35", high52ChangePercent: "I35" },
+    XSMO: { name: "B36", price: "E36", changePercent: "F36", volume: "G36", high52Price: "H36", high52ChangePercent: "I36" },
+    RWJ:  { name: "B37", price: "E37", changePercent: "F37", volume: "G37", high52Price: "H37", high52ChangePercent: "I37" },
+    AVUV: { name: "B38", price: "E38", changePercent: "F38", volume: "G38", high52Price: "H38", high52ChangePercent: "I38" }
 } as const satisfies ETFFetchingTableCellNames;

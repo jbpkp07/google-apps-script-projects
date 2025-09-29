@@ -7,7 +7,35 @@ function fetchDaytimePrices(event?: TimeDrivenEvent): void {
     try {
         const sheet = new FetchingGoogleSheet();
 
-        console.log(event, sheet, ApiType);
+        if (!sheet.isFetchingEnabled(event)) {
+            Utils.logToCloud("Fetching is disabled");
+
+            return;
+        }
+
+        sheet.updateLastFetchedTime();
+
+        sheet.fetchDaytimePrices();
+
+        Utils.logToCloud("Success");
+    } catch (error) {
+        Utils.alert(error);
+    }
+}
+
+function fetchWatchListData(event?: TimeDrivenEvent): void {
+    try {
+        const sheet = new FetchingGoogleSheet();
+
+        if (!sheet.isFetchingEnabled(event)) {
+            Utils.logToCloud("Fetching is disabled");
+
+            return;
+        }
+
+        sheet.updateLastFetchedTime();
+
+        sheet.fetchWatchListData();
 
         Utils.logToCloud("Success");
     } catch (error) {
