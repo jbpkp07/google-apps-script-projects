@@ -13,7 +13,9 @@ abstract class ApiType {
     static WatchListResponse = () => ApiType.isWatchListResponse;
 
     // questions
-    static isHttpStatusOK = Type.isLiteralOf(200);
+    static isHttpStatusOK = (value: unknown): value is 200 => {
+        return Type.isLiteralOf(200)(value);
+    };
 
     static isTicker = (value: unknown): value is Ticker => {
         return Type.isStringOfMinLength(1)(value) && TICKERS.includes(value as Ticker);

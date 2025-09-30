@@ -1,13 +1,23 @@
 /// <reference path="./Type.ts" />
 
-class Either<T> {
+class Either<T = undefined> {
     private readonly _value: Error | NotError<T>;
 
-    constructor(value: Error | NotError<T>) {
-        this._value = value;
+    constructor(value?: Error | NotError<T>) {
+        this._value = value as Error | NotError<T>;
     }
 
-    static new<T>(value: Error | NotError<T>): Either<T> {
+    private static stringify(anything: unknown): string {
+        if (anything instanceof Either) {
+            return Either.stringify(anything.value());
+        }
+
+        const isSimple = Type.isError(anything) || !Type.isObject(anything);
+
+        return isSimple ? String(anything) : JSON.stringify(anything);
+    }
+
+    static new<T = undefined>(value?: Error | NotError<T>): Either<T> {
         return new Either<T>(value);
     }
 
@@ -18,20 +28,9 @@ class Either<T> {
     }
 
     static fromError<T>(error: unknown): Either<T> {
-        //
-        const stringify = (anything: unknown): string => {
-            if (anything instanceof Either) {
-                return stringify(anything.value());
-            }
-
-            const isSimple = Type.isError(anything) || !Type.isObject(anything);
-
-            return isSimple ? String(anything) : JSON.stringify(anything);
-        };
-
         return Type.isError(error) // prettier-ignore
             ? Either.new<T>(error)
-            : Either.newError(stringify(error));
+            : Either.newError<T>(Either.stringify(error));
     }
 
     public value(): Error | NotError<T> {

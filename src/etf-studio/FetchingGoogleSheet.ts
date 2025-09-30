@@ -12,14 +12,14 @@ class FetchingGoogleSheet extends GoogleSheet {
         for (const etfData of fetchResults) {
             for (const { value, cellName } of Object.values(etfData)) {
                 if (Type.isNonEmptyLiteral(value)) {
-                    super.setCellValue(cellName, value).assertOK();
+                    this.setCellValue(cellName, value).assertOK();
                 }
             }
         }
     }
 
     public fetchDaytimePrices(): ThrowsOrReturns<void> {
-        const url = super.getCellString(DAYTIME_PRICES_URL_CELL_NAME).unwrap();
+        const url = this.getCellString(DAYTIME_PRICES_URL_CELL_NAME).unwrap();
 
         const response = Utils.fetchDataOf(ApiType.DaytimePricesResponse())(url).unwrap();
 
@@ -29,7 +29,7 @@ class FetchingGoogleSheet extends GoogleSheet {
     }
 
     public fetchWatchListData(): ThrowsOrReturns<void> {
-        const url = super.getCellString(WATCH_LIST_URL_CELL_NAME).unwrap();
+        const url = this.getCellString(WATCH_LIST_URL_CELL_NAME).unwrap();
 
         const response = Utils.fetchDataOf(ApiType.WatchListResponse())(url).unwrap();
 
@@ -40,18 +40,18 @@ class FetchingGoogleSheet extends GoogleSheet {
 
     public isFetchingEnabled(event?: TimeDrivenEvent): ThrowsOrReturns<boolean> {
         const wasTimeTriggered = !!event?.triggerUid;
-        const isTimeTriggerEnabled = super.getCellBoolean(IS_FETCHING_TIME_TRIGGER_ENABLED_CELL_NAME).unwrap();
+        const isTimeTriggerEnabled = this.getCellBoolean(IS_FETCHING_TIME_TRIGGER_ENABLED_CELL_NAME).unwrap();
 
         if (wasTimeTriggered && !isTimeTriggerEnabled) {
             return false;
         }
 
-        return super.getCellBoolean(IS_FETCHING_ENABLED_CELL_NAME).unwrap();
+        return this.getCellBoolean(IS_FETCHING_ENABLED_CELL_NAME).unwrap();
     }
 
     public updateLastFetchedTime(): ThrowsOrReturns<void> {
         const currentTime = Utils.getCurrentTime();
 
-        super.setCellValue(LAST_FETCHED_TIME_CELL_NAME, currentTime).assertOK();
+        this.setCellValue(LAST_FETCHED_TIME_CELL_NAME, currentTime).assertOK();
     }
 }

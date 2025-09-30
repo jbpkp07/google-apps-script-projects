@@ -20,18 +20,22 @@ class GoogleSheet {
         }
     }
 
-    private getRange(rangeName: string): CellRange | null {
-        return this._sheet.getRange(rangeName) ?? null;
+    private getRange(rangeName: string): CellRange {
+        return this._sheet.getRange(rangeName);
     }
 
     private getCellValueOf<T>(isTypeOK: IsTypeOK<T>): GetCellValue<T> {
         //
         const getCellValue = (cellName: string): Either<T> => {
-            const value: unknown = this.getRange(cellName)?.getValue();
+            try {
+                const value: unknown = this.getRange(cellName).getValue();
 
-            return isTypeOK(value)
-                ? Either.new(value)
-                : Either.newError(`Value at "${cellName}" is either missing or the wrong type`);
+                return isTypeOK(value)
+                    ? Either.new(value)
+                    : Either.newError(`Value at "${cellName}" is either missing or the wrong type`);
+            } catch {
+                return Either.newError(`Unable to get value at cell name: ${cellName}`);
+            }
         };
 
         return getCellValue;
@@ -40,22 +44,28 @@ class GoogleSheet {
     private getRowValuesOf<T>(isTypeOK: IsTypeOK<T[]>): GetRowValues<T> {
         //
         const getRowValues = (rangeName: string): Either<T[]> => {
-            const values: unknown[] | undefined = this.getRange(rangeName)?.getValues()[0];
+            try {
+                const values: unknown[] | undefined = this.getRange(rangeName).getValues()[0];
 
-            return isTypeOK(values)
-                ? Either.new(values)
-                : Either.newError(`Row values at "${rangeName}" are either missing or the wrong type`);
+                return isTypeOK(values)
+                    ? Either.new(values)
+                    : Either.newError(`Row values at "${rangeName}" are either missing or the wrong type`);
+            } catch {
+                return Either.newError(`Unable to get row values for cell range: ${rangeName}`);
+            }
         };
 
         return getRowValues;
     }
 
     public setCellValue(cellName: string, value: Literal): Either<undefined> {
-        const range: CellRange | undefined = this.getRange(cellName)?.setValue(value);
+        try {
+            this.getRange(cellName).setValue(value);
 
-        return range?.getValue() === value
-            ? Either.new(undefined)
-            : Either.newError(`Failed setting value ("${String(value)}" type ${typeof value}) at cell "${cellName}"`);
+            return Either.new();
+        } catch {
+            return Either.newError(`Unable to set value: ${String(value)} at cell name: ${cellName}`);
+        }
     }
 
     public getCellBoolean = this.getCellValueOf(Type.boolean());
