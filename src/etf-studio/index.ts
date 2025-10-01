@@ -15,13 +15,11 @@ function fetchDaytimePrices(event?: TimeDrivenEvent): void {
     }
 }
 
-function fetchWatchListData(event?: TimeDrivenEvent): void {
+function fetchWatchListData(): void {
     try {
         const sheet = new FetchingGoogleSheet();
 
-        if (sheet.isFetchingEnabled(event)) {
-            sheet.fetchWatchListData();
-        }
+        sheet.fetchWatchListData();
     } catch (error) {
         Utils.alert(error);
     }
