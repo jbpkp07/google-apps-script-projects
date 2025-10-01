@@ -24,15 +24,18 @@ const ETF_SCRAPING_TABLE_CELL_NAMES = [
 
 const FETCHING_SHEET_NAME = "Fetching";
 
-const IS_FETCHING_ENABLED_CELL_NAME = "B3";
-const IS_FETCHING_TIME_TRIGGER_ENABLED_CELL_NAME = "B4";
-
-const LAST_FETCHED_TIME_CELL_NAME = "B5";
-
-const DAYTIME_PRICES_URL_CELL_NAME = "B12";
-const WATCH_LIST_URL_CELL_NAME = "B24";
+const IS_FETCHING_TIME_TRIGGER_ENABLED_CELL_NAME = "B3";
+const LAST_FETCHED_TIME_CELL_NAME = "B4";
 
 const TICKERS = ["QQQM", "SPMO", "SPY", "FDVV", "MGV", "XMMO", "SPMD", "RWK", "XSMO", "RWJ", "AVUV"] as const satisfies Tickers;
+const COLUMNS = ["price", "change", "volume", "high52", "high52ch"] as const satisfies WatchListColumnNames;
+const SYMBOLS = TICKERS.map((ticker) => "!" + ticker) as Symbols;
+
+const URL_COLUMNS = COLUMNS.join(",");
+const URL_SYMBOLS = SYMBOLS.join(",");
+
+const DAYTIME_PRICES_URL = `https://stockanalysis.com/api/quotes/prices?s=${URL_SYMBOLS}`;
+const WATCH_LIST_DATA_URL = `https://stockanalysis.com/api/watchlist?symbols=${URL_SYMBOLS}&columns=${URL_COLUMNS}`;
 
 // prettier-ignore
 const ETF_FETCHING_TABLE_CELL_NAMES = {

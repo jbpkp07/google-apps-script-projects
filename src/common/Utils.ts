@@ -9,7 +9,7 @@ abstract class Utils {
         try {
             SpreadsheetApp.getUi().alert(timeStampMessage);
         } catch {
-            console.log(timeStampMessage);
+            console.log(timeStampMessage); // log to cloud
         }
     };
 

@@ -8,6 +8,12 @@ class FetchingGoogleSheet extends GoogleSheet {
         super(FETCHING_SHEET_NAME);
     }
 
+    private updateLastFetchedTime(): ThrowsOrReturns<void> {
+        const currentTime = Utils.getCurrentTime();
+
+        this.setCellValue(LAST_FETCHED_TIME_CELL_NAME, currentTime).assertOK();
+    }
+
     private updateSheet(fetchResults: ETFData[]): ThrowsOrReturns<void> {
         for (const etfData of fetchResults) {
             for (const { value, cellName } of Object.values(etfData)) {
@@ -16,12 +22,12 @@ class FetchingGoogleSheet extends GoogleSheet {
                 }
             }
         }
+
+        this.updateLastFetchedTime();
     }
 
     public fetchDaytimePrices(): ThrowsOrReturns<void> {
-        const url = this.getCellString(DAYTIME_PRICES_URL_CELL_NAME).unwrap();
-
-        const response = Utils.fetchDataOf(ApiType.DaytimePricesResponse())(url).unwrap();
+        const response = Utils.fetchDataOf(ApiType.DaytimePricesResponse())(DAYTIME_PRICES_URL).unwrap();
 
         const etfData = Mappers.mapPricesToETFData(response);
 
@@ -29,9 +35,7 @@ class FetchingGoogleSheet extends GoogleSheet {
     }
 
     public fetchWatchListData(): ThrowsOrReturns<void> {
-        const url = this.getCellString(WATCH_LIST_URL_CELL_NAME).unwrap();
-
-        const response = Utils.fetchDataOf(ApiType.WatchListResponse())(url).unwrap();
+        const response = Utils.fetchDataOf(ApiType.WatchListResponse())(WATCH_LIST_DATA_URL).unwrap();
 
         const etfData = Mappers.mapWatchListToETFData(response);
 
@@ -39,19 +43,8 @@ class FetchingGoogleSheet extends GoogleSheet {
     }
 
     public isFetchingEnabled(event?: TimeDrivenEvent): ThrowsOrReturns<boolean> {
-        const wasTimeTriggered = !!event?.triggerUid;
-        const isTimeTriggerEnabled = this.getCellBoolean(IS_FETCHING_TIME_TRIGGER_ENABLED_CELL_NAME).unwrap();
+        const wasMenuTriggered = !event?.triggerUid;
 
-        if (wasTimeTriggered && !isTimeTriggerEnabled) {
-            return false;
-        }
-
-        return this.getCellBoolean(IS_FETCHING_ENABLED_CELL_NAME).unwrap();
-    }
-
-    public updateLastFetchedTime(): ThrowsOrReturns<void> {
-        const currentTime = Utils.getCurrentTime();
-
-        this.setCellValue(LAST_FETCHED_TIME_CELL_NAME, currentTime).assertOK();
+        return wasMenuTriggered || this.getCellBoolean(IS_FETCHING_TIME_TRIGGER_ENABLED_CELL_NAME).unwrap();
     }
 }

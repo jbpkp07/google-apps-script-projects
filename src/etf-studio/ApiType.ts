@@ -21,12 +21,16 @@ abstract class ApiType {
         return Type.isStringOfMinLength(1)(value) && TICKERS.includes(value as Ticker);
     };
 
+    static isSymbol = (value: unknown): value is Uppercase<string> => {
+        return Type.isStringOfMinLength(1)(value) && SYMBOLS.includes(value as Uppercase<string>);
+    };
+
     static isDaytimePricesData = (value: unknown): value is DaytimePricesData => {
         const maybe = value as DaytimePricesData;
 
         return (
             Type.isNonEmptyRecord(maybe) &&
-            Type.isStringOfMinLength(1)(maybe.name) &&
+            ApiType.isSymbol(maybe.name) &&
             Type.isNumberOrUndefined(maybe.price) &&
             Type.isNumberOrUndefined(maybe.chg) &&
             Type.isNumberOrUndefined(maybe.change) &&
@@ -49,7 +53,7 @@ abstract class ApiType {
 
         return (
             Type.isNonEmptyRecord(maybe) &&
-            Type.isStringOfMinLength(1)(maybe.s) &&
+            ApiType.isSymbol(maybe.s) &&
             Type.isStringOfMinLength(1)(maybe.n) &&
             Type.isNumberOrUndefined(maybe.price) &&
             Type.isNumberOrUndefined(maybe.change) &&

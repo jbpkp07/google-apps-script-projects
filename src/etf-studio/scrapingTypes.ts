@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 type ETFScrapingTableRow = Readonly<{
-    etfCellName: string;
-    isEnabledCellName: string;
-    slugCellName: string;
-    urlCellName: string;
-    scrapeResultsRangeName: string;
+    etfCellName: Uppercase<string>;
+    isEnabledCellName: Uppercase<string>;
+    slugCellName: Uppercase<string>;
+    urlCellName: Uppercase<string>;
+    scrapeResultsRangeName: Uppercase<string>;
 }>;
 
 type ETFScrapingTableCellNames = Readonly<ETFScrapingTableRow[]>;

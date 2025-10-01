@@ -3,7 +3,7 @@
 namespace StockAnalysis {
     export namespace RealTimePricesAPI {
         export type DaytimeData = {
-            name: string; // `!${ticker}` format
+            name: Uppercase<string>; // `!TICKER` format
             price?: number;
             chg?: number; // $ change
             change?: number; // % change
@@ -17,20 +17,18 @@ namespace StockAnalysis {
     }
 
     export namespace WatchListAPI {
-        export type Data = {
-            s: string; // `!${ticker}` format
-            n: string;
+        export type ColumnData = {
             price?: number;
             change?: number; // % change
             volume?: number;
             high52?: number;
             high52ch?: number; // % change
-            curr: {
-                main: "USD";
-                price: "USD";
-                dividend: "USD";
-            };
         };
+
+        export type Data = {
+            s: Uppercase<string>; // `!TICKER` format
+            n: string;
+        } & ColumnData;
 
         export type Response = {
             status: number;
@@ -42,11 +40,17 @@ namespace StockAnalysis {
 type DaytimePricesData = Readonly<StockAnalysis.RealTimePricesAPI.DaytimeData>;
 type DaytimePricesResponse = Readonly<StockAnalysis.RealTimePricesAPI.DaytimeResponse>;
 
+type WatchListColumnData = Readonly<StockAnalysis.WatchListAPI.ColumnData>;
 type WatchListData = Readonly<StockAnalysis.WatchListAPI.Data>;
 type WatchListResponse = Readonly<StockAnalysis.WatchListAPI.Response>;
 
 type Tickers = readonly ["QQQM", "SPMO", "SPY", "FDVV", "MGV", "XMMO", "SPMD", "RWK", "XSMO", "RWJ", "AVUV"];
-type Ticker = Tickers[number];
+type Ticker = NonNullable<Tickers[number]>;
+
+type WatchListColumnNames = readonly (keyof WatchListColumnData)[];
+type WatchListColumnName = NonNullable<WatchListColumnNames[number]>;
+
+type Symbols = readonly Uppercase<string>[];
 
 type ETFData = Readonly<{
     name?: {
@@ -75,6 +79,6 @@ type ETFData = Readonly<{
     };
 }>;
 
-type ETFFetchingTableRow = Readonly<Record<keyof ETFData, string>>;
+type ETFFetchingTableRow = Readonly<Record<keyof ETFData, Uppercase<string>>>;
 
 type ETFFetchingTableCellNames = Readonly<Record<Ticker, ETFFetchingTableRow>>;

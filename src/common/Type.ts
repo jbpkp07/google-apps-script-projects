@@ -81,6 +81,14 @@ abstract class Type {
         return isString;
     };
 
+    static isStringLowercase = (value: unknown): value is Lowercase<string> => {
+        return Type.isString(value) && value.toLowerCase() === value;
+    };
+
+    static isStringUppercase = (value: unknown): value is Uppercase<string> => {
+        return Type.isString(value) && value.toUpperCase() === value;
+    };
+
     static isUndefined = (value: unknown): value is undefined => {
         return value === undefined;
     };
