@@ -10,7 +10,7 @@ abstract class Mappers {
 
         return ApiType.isTicker(trimmed)
             ? Either.new(trimmed)
-            : Either.newError(`Not a valid ticker: symbol="${symbol}", trimmed="${trimmed}"`);
+            : Either.error(`Not a valid ticker: symbol="${symbol}", trimmed="${trimmed}"`);
     }
 
     private static getCellNamesOf(row: Ticker) {

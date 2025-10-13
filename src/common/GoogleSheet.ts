@@ -32,9 +32,9 @@ class GoogleSheet {
 
                 return isTypeOK(value)
                     ? Either.new(value)
-                    : Either.newError(`Value at "${cellName}" is either missing or the wrong type`);
+                    : Either.error(`Value at "${cellName}" is either missing or the wrong type`);
             } catch {
-                return Either.newError(`Unable to get value at cell name: ${cellName}`);
+                return Either.error(`Unable to get value at cell name: ${cellName}`);
             }
         };
 
@@ -49,22 +49,22 @@ class GoogleSheet {
 
                 return isTypeOK(values)
                     ? Either.new(values)
-                    : Either.newError(`Row values at "${rangeName}" are either missing or the wrong type`);
+                    : Either.error(`Row values at "${rangeName}" are either missing or the wrong type`);
             } catch {
-                return Either.newError(`Unable to get row values for cell range: ${rangeName}`);
+                return Either.error(`Unable to get row values for cell range: ${rangeName}`);
             }
         };
 
         return getRowValues;
     }
 
-    public setCellValue(cellName: string, value: Literal): Either<undefined> {
+    public setCellValue(cellName: string, value: Literal): Either<void> {
         try {
             this.getRange(cellName).setValue(value);
 
-            return Either.new();
+            return Either.void();
         } catch {
-            return Either.newError(`Unable to set value: ${String(value)} at cell name: ${cellName}`);
+            return Either.error(`Unable to set value: ${String(value)} at cell name: ${cellName}`);
         }
     }
 

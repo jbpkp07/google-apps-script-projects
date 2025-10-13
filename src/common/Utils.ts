@@ -60,7 +60,7 @@ abstract class Utils {
 
                 return isTypeOK(data)
                     ? Either.new(data)
-                    : Either.newError(`Fetched bad data from ${url}; Data: ${Utils.stringify(data)}`);
+                    : Either.error(`Fetched bad data from ${url}; Data: ${Utils.stringify(data)}`);
             } catch (error) {
                 return Either.fromError(error);
             }

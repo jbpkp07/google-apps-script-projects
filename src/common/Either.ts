@@ -1,10 +1,10 @@
 /// <reference path="./Type.ts" />
 
-class Either<T = undefined> {
+class Either<T> {
     private readonly _value: Error | NotError<T>;
 
-    constructor(value?: Error | NotError<T>) {
-        this._value = value as Error | NotError<T>;
+    constructor(value: Error | NotError<T>) {
+        this._value = value;
     }
 
     private static stringify(anything: unknown): string {
@@ -17,11 +17,15 @@ class Either<T = undefined> {
         return isSimple ? String(anything) : JSON.stringify(anything);
     }
 
-    static new<T = undefined>(value?: Error | NotError<T>): Either<T> {
+    static void(): Either<void> {
+        return new Either<void>(undefined);
+    }
+
+    static new<T>(value: Error | NotError<T>): Either<T> {
         return new Either<T>(value);
     }
 
-    static newError<T>(message?: string): Either<T> {
+    static error<T>(message?: string): Either<T> {
         const value = new Error(message);
 
         return new Either<T>(value);
@@ -30,7 +34,7 @@ class Either<T = undefined> {
     static fromError<T>(error: unknown): Either<T> {
         return Type.isError(error) // prettier-ignore
             ? Either.new<T>(error)
-            : Either.newError<T>(Either.stringify(error));
+            : Either.error<T>(Either.stringify(error));
     }
 
     public value(): Error | NotError<T> {
