@@ -27,7 +27,9 @@ class FetchingGoogleSheet extends GoogleSheet {
     }
 
     public fetchDaytimePrices(): ThrowsOrReturns<void> {
-        const response = Utils.fetchDataOf(ApiType.DaytimePricesResponse())(DAYTIME_PRICES_URL).unwrap();
+        const fetchData = Utils.fetchDataOf(ApiType.DaytimePricesResponse());
+
+        const response = fetchData(DAYTIME_PRICES_URL).unwrap();
 
         const etfData = Mappers.mapPricesToETFData(response);
 
@@ -35,7 +37,9 @@ class FetchingGoogleSheet extends GoogleSheet {
     }
 
     public fetchWatchListData(): ThrowsOrReturns<void> {
-        const response = Utils.fetchDataOf(ApiType.WatchListResponse())(WATCH_LIST_DATA_URL).unwrap();
+        const fetchData = Utils.fetchDataOf(ApiType.WatchListResponse());
+
+        const response = fetchData(WATCH_LIST_DATA_URL).unwrap();
 
         const etfData = Mappers.mapWatchListToETFData(response);
 
