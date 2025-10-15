@@ -3,16 +3,6 @@
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 abstract class ApiType {
-    // nouns
-    static DaytimePricesData = () => ApiType.isDaytimePricesData;
-
-    static DaytimePricesResponse = () => ApiType.isDaytimePricesResponse;
-
-    static WatchListData = () => ApiType.isWatchListData;
-
-    static WatchListResponse = () => ApiType.isWatchListResponse;
-
-    // questions
     static isHttpStatusOK = (value: unknown): value is 200 => {
         return Type.isLiteralOf(200)(value);
     };
@@ -72,4 +62,13 @@ abstract class ApiType {
             Type.isArrayOf(ApiType.WatchListData())(maybe.data)
         );
     };
+
+    // nouns
+    static DaytimePricesData = () => ApiType.isDaytimePricesData;
+
+    static DaytimePricesResponse = () => ApiType.isDaytimePricesResponse;
+
+    static WatchListData = () => ApiType.isWatchListData;
+
+    static WatchListResponse = () => ApiType.isWatchListResponse;
 }

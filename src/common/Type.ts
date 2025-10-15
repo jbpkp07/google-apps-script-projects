@@ -1,14 +1,4 @@
 abstract class Type {
-    // nouns
-    static boolean = () => Type.isBoolean;
-
-    static number = () => Type.isNumber;
-
-    static numberArray = () => Type.isArrayOf(Type.number());
-
-    static stringOfMinLength = (length: number) => Type.isStringOfMinLength(length);
-
-    // questions
     static isArray = (value: unknown): value is unknown[] => {
         return Array.isArray(value);
     };
@@ -92,4 +82,13 @@ abstract class Type {
     static isUndefined = (value: unknown): value is undefined => {
         return value === undefined;
     };
+
+    // nouns
+    static boolean = () => Type.isBoolean;
+
+    static number = () => Type.isNumber;
+
+    static numberArray = () => Type.isArrayOf(Type.number());
+
+    static stringOfMinLength = (length: number) => Type.isStringOfMinLength(length);
 }
