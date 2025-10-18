@@ -44,13 +44,7 @@ type WatchListColumnData = Readonly<StockAnalysis.WatchListAPI.ColumnData>;
 type WatchListData = Readonly<StockAnalysis.WatchListAPI.Data>;
 type WatchListResponse = Readonly<StockAnalysis.WatchListAPI.Response>;
 
-type Tickers = readonly ["QQQM", "SPMO", "SPLG", "MGV", "XMMO", "RWJ", "AVUV"];
-type Ticker = NonNullable<Tickers[number]>;
-
 type WatchListColumnNames = readonly (keyof WatchListColumnData)[];
-type WatchListColumnName = NonNullable<WatchListColumnNames[number]>;
-
-type Symbols = readonly Uppercase<string>[];
 
 type ETFData = Readonly<{
     name?: {
