@@ -9,7 +9,7 @@ const LAST_FETCHED_TIME_CELL_NAME = "B4";
 
 const TICKERS = ["QQQM", "SPMO", "SPLG", "MGV", "XMMO", "RWJ", "AVUV"] as const satisfies Tickers;
 
-const SYMBOLS = TICKERS.map((ticker) => `!${ticker}` as const) satisfies Symbols;
+const SYMBOLS = TICKERS.map((ticker) => `!${ticker}` as const) satisfies TickerSymbols;
 const COLUMNS = ["price", "change", "volume", "high52", "high52ch"] as const satisfies WatchListColumnNames;
 
 const URL_SYMBOLS = SYMBOLS.join(",");

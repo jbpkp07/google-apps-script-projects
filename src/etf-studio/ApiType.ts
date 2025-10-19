@@ -11,8 +11,8 @@ abstract class ApiType {
         return Type.isStringOfMinLength(1)(value) && TICKERS.includes(value as Ticker);
     };
 
-    static isSymbol = (value: unknown): value is Uppercase<string> => {
-        return Type.isStringOfMinLength(1)(value) && SYMBOLS.includes(value as Uppercase<string>);
+    static isSymbol = (value: unknown): value is TickerSymbol => {
+        return Type.isStringOfMinLength(1)(value) && SYMBOLS.includes(value as TickerSymbol);
     };
 
     static isDaytimePricesData = (value: unknown): value is DaytimePricesData => {
