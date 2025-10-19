@@ -20,13 +20,13 @@ class GoogleSheet {
         }
     }
 
-    private getRange(rangeName: string): CellRange {
+    private getRange(rangeName: Uppercase<string>): CellRange {
         return this._sheet.getRange(rangeName);
     }
 
     private getCellValueOf<T>(isTypeOK: IsTypeOK<T>): GetCellValue<T> {
         //
-        const getCellValue = (cellName: string): Either<T> => {
+        const getCellValue = (cellName: Uppercase<string>): Either<T> => {
             try {
                 const value: unknown = this.getRange(cellName).getValue();
 
@@ -43,7 +43,7 @@ class GoogleSheet {
 
     private getRowValuesOf<T>(isTypeOK: IsTypeOK<T[]>): GetRowValues<T> {
         //
-        const getRowValues = (rangeName: string): Either<T[]> => {
+        const getRowValues = (rangeName: Uppercase<string>): Either<T[]> => {
             try {
                 const values: unknown[] | undefined = this.getRange(rangeName).getValues()[0];
 
@@ -58,7 +58,7 @@ class GoogleSheet {
         return getRowValues;
     }
 
-    public setCellValue(cellName: string, value: Literal): Either<void> {
+    public setCellValue(cellName: Uppercase<string>, value: Literal): Either<void> {
         try {
             this.getRange(cellName).setValue(value);
 

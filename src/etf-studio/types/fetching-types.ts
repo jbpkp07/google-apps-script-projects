@@ -49,27 +49,27 @@ type WatchListColumnNames = readonly (keyof WatchListColumnData)[];
 type ETFData = Readonly<{
     name?: {
         value?: string | undefined;
-        cellName: string;
+        cellName: Uppercase<string>;
     };
     price?: {
         value?: number | undefined;
-        cellName: string;
+        cellName: Uppercase<string>;
     };
     changePercent?: {
         value?: number | undefined;
-        cellName: string;
+        cellName: Uppercase<string>;
     };
     volume?: {
         value?: number | undefined;
-        cellName: string;
+        cellName: Uppercase<string>;
     };
     high52Price?: {
         value?: number | undefined;
-        cellName: string;
+        cellName: Uppercase<string>;
     };
     high52ChangePercent?: {
         value?: number | undefined;
-        cellName: string;
+        cellName: Uppercase<string>;
     };
 }>;
 
