@@ -36,10 +36,6 @@ abstract class Utils {
         return trimmedUrl + "/?" + uniqueNumber;
     };
 
-    static createUrl = (domain: string, slug: string): string => {
-        return Utils.trim(domain, "/") + "/" + Utils.trim(slug, "/");
-    };
-
     static fetchData = (url: string): Either<unknown> => {
         try {
             const json: string = UrlFetchApp.fetch(url).getContentText();
