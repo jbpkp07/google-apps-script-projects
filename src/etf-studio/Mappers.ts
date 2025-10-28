@@ -31,7 +31,7 @@ abstract class Mappers {
                     cellName: getCellName("price")
                 },
                 changePercent: {
-                    value: change,
+                    value: change, // all of these properties can be missing during preMarket
                     cellName: getCellName("changePercent")
                 },
                 volume: {
@@ -62,7 +62,7 @@ abstract class Mappers {
                     cellName: getCellName("price")
                 },
                 changePercent: {
-                    value: change,
+                    value: change ?? 0, // can be missing if day change was 0.00%
                     cellName: getCellName("changePercent")
                 },
                 volume: {
