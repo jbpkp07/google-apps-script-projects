@@ -29,9 +29,17 @@ class FetchingGoogleSheet extends GoogleSheet {
     public fetchDaytimePrices(): ThrowsOrReturns<void> {
         const fetchData = Utils.fetchDataOf(ApiType.DaytimePricesResponse());
 
-        const response = fetchData(DAYTIME_PRICES_URL).unwrap();
+        let response = fetchData(DAYTIME_PRICES_URL);
 
-        const etfData = Mappers.mapPricesToETFData(response);
+        if (!response.isOK()) {
+            Utils.alert('"Fetch Prices" failed, retrying...');
+
+            Utilities.sleep(1000);
+
+            response = fetchData(DAYTIME_PRICES_URL); // retry
+        }
+
+        const etfData = Mappers.mapPricesToETFData(response.unwrap());
 
         this.updateSheet(etfData);
     }
@@ -39,9 +47,17 @@ class FetchingGoogleSheet extends GoogleSheet {
     public fetchWatchListData(): ThrowsOrReturns<void> {
         const fetchData = Utils.fetchDataOf(ApiType.WatchListResponse());
 
-        const response = fetchData(WATCH_LIST_DATA_URL).unwrap();
+        let response = fetchData(WATCH_LIST_DATA_URL);
 
-        const etfData = Mappers.mapWatchListToETFData(response);
+        if (!response.isOK()) {
+            Utils.alert('"Fetch All Data" failed, retrying...');
+
+            Utilities.sleep(1000);
+
+            response = fetchData(WATCH_LIST_DATA_URL); // retry
+        }
+
+        const etfData = Mappers.mapWatchListToETFData(response.unwrap());
 
         this.updateSheet(etfData);
     }
