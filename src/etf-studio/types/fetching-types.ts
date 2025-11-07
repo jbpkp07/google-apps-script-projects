@@ -23,6 +23,8 @@ namespace StockAnalysis {
             volume?: number;
             high52?: number;
             high52ch?: number; // % change
+            low?: number;
+            high?: number;
         };
 
         export type Data = {
@@ -68,6 +70,14 @@ type ETFData = Readonly<{
         cellName: Uppercase<string>;
     };
     high52ChangePercent?: {
+        value?: number | undefined;
+        cellName: Uppercase<string>;
+    };
+    dayLowPrice?: {
+        value?: number | undefined;
+        cellName: Uppercase<string>;
+    };
+    dayHighPrice?: {
         value?: number | undefined;
         cellName: Uppercase<string>;
     };
