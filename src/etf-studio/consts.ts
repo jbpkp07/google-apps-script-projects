@@ -10,7 +10,7 @@ const LAST_FETCHED_TIME_CELL_NAME = "B4";
 const TICKERS = ["QQQM", "SPMO", "SPYM", "MGV", "XMMO", "RWJ", "AVUV", "SPY", "AAPL", "AMZN"] as const satisfies Tickers;
 
 const SYMBOLS = TICKERS.map((ticker) => `!${ticker}` as const) satisfies TickerSymbols;
-const COLUMNS = ["price", "change", "volume", "high52", "high52ch", "low", "high"] as const satisfies WatchListColumnNames;
+const COLUMNS = ["price", "change", "volume", "low", "high", "high52", "allTimeHigh"] as const satisfies WatchListColumnNames;
 
 const URL_SYMBOLS = SYMBOLS.join(",");
 const URL_COLUMNS = COLUMNS.join(",");
@@ -20,16 +20,16 @@ const WATCH_LIST_DATA_URL = `${DOMAIN}/api/watchlist?symbols=${URL_SYMBOLS}&colu
 
 // prettier-ignore
 const ETF_FETCHING_TABLE_CELL_NAMES = {
-    QQQM: { name: "B28", price: "E28", changePercent: "F28", volume: "G28", high52Price: "H28", high52ChangePercent: "I28", dayLowPrice: "J28", dayHighPrice: "K28" },
-    SPMO: { name: "B29", price: "E29", changePercent: "F29", volume: "G29", high52Price: "H29", high52ChangePercent: "I29", dayLowPrice: "J29", dayHighPrice: "K29" },
-    SPYM: { name: "B30", price: "E30", changePercent: "F30", volume: "G30", high52Price: "H30", high52ChangePercent: "I30", dayLowPrice: "J30", dayHighPrice: "K30" },
-    MGV:  { name: "B31", price: "E31", changePercent: "F31", volume: "G31", high52Price: "H31", high52ChangePercent: "I31", dayLowPrice: "J31", dayHighPrice: "K31" },
-    XMMO: { name: "B32", price: "E32", changePercent: "F32", volume: "G32", high52Price: "H32", high52ChangePercent: "I32", dayLowPrice: "J32", dayHighPrice: "K32" },
-    RWJ:  { name: "B33", price: "E33", changePercent: "F33", volume: "G33", high52Price: "H33", high52ChangePercent: "I33", dayLowPrice: "J33", dayHighPrice: "K33" },
-    AVUV: { name: "B34", price: "E34", changePercent: "F34", volume: "G34", high52Price: "H34", high52ChangePercent: "I34", dayLowPrice: "J34", dayHighPrice: "K34" },
-    SPY:  { name: "B35", price: "E35", changePercent: "F35", volume: "G35", high52Price: "H35", high52ChangePercent: "I35", dayLowPrice: "J35", dayHighPrice: "K35" },
-    AAPL: { name: "B36", price: "E36", changePercent: "F36", volume: "G36", high52Price: "H36", high52ChangePercent: "I36", dayLowPrice: "J36", dayHighPrice: "K36" },
-    AMZN: { name: "B37", price: "E37", changePercent: "F37", volume: "G37", high52Price: "H37", high52ChangePercent: "I37", dayLowPrice: "J37", dayHighPrice: "K37" },
+    QQQM: { name: "B28", price: "E28", changePercent: "F28", volume: "G28", dayLowPrice: "H28", dayHighPrice: "I28", high52Price: "J28", allTimeHighPrice: "K28" },
+    SPMO: { name: "B29", price: "E29", changePercent: "F29", volume: "G29", dayLowPrice: "H29", dayHighPrice: "I29", high52Price: "J29", allTimeHighPrice: "K29" },
+    SPYM: { name: "B30", price: "E30", changePercent: "F30", volume: "G30", dayLowPrice: "H30", dayHighPrice: "I30", high52Price: "J30", allTimeHighPrice: "K30" },
+    MGV:  { name: "B31", price: "E31", changePercent: "F31", volume: "G31", dayLowPrice: "H31", dayHighPrice: "I31", high52Price: "J31", allTimeHighPrice: "K31" },
+    XMMO: { name: "B32", price: "E32", changePercent: "F32", volume: "G32", dayLowPrice: "H32", dayHighPrice: "I32", high52Price: "J32", allTimeHighPrice: "K32" },
+    RWJ:  { name: "B33", price: "E33", changePercent: "F33", volume: "G33", dayLowPrice: "H33", dayHighPrice: "I33", high52Price: "J33", allTimeHighPrice: "K33" },
+    AVUV: { name: "B34", price: "E34", changePercent: "F34", volume: "G34", dayLowPrice: "H34", dayHighPrice: "I34", high52Price: "J34", allTimeHighPrice: "K34" },
+    SPY:  { name: "B35", price: "E35", changePercent: "F35", volume: "G35", dayLowPrice: "H35", dayHighPrice: "I35", high52Price: "J35", allTimeHighPrice: "K35" },
+    AAPL: { name: "B36", price: "E36", changePercent: "F36", volume: "G36", dayLowPrice: "H36", dayHighPrice: "I36", high52Price: "J36", allTimeHighPrice: "K36" },
+    AMZN: { name: "B37", price: "E37", changePercent: "F37", volume: "G37", dayLowPrice: "H37", dayHighPrice: "I37", high52Price: "J37", allTimeHighPrice: "K37" },
 } as const satisfies ETFFetchingTableCellNames;
 
 const SCRAPING_SHEET_NAME = "Scraping";

@@ -47,7 +47,7 @@ abstract class Mappers {
     static mapWatchListToETFData(response: WatchListResponse): ThrowsOrReturns<ETFData[]> {
         //
         const toETFData = (data: WatchListData): ETFData => {
-            const { s: symbol, n: name, price, change, volume, high52, high52ch, low, high } = data;
+            const { s: symbol, n: name, price, change, volume, low, high, high52, allTimeHigh } = data;
 
             const ticker = this.toTicker(symbol).unwrap();
             const getCellName = this.getCellNamesOf(ticker);
@@ -69,14 +69,6 @@ abstract class Mappers {
                     value: volume,
                     cellName: getCellName("volume")
                 },
-                high52Price: {
-                    value: high52,
-                    cellName: getCellName("high52Price")
-                },
-                high52ChangePercent: {
-                    value: high52ch,
-                    cellName: getCellName("high52ChangePercent")
-                },
                 dayLowPrice: {
                     value: low,
                     cellName: getCellName("dayLowPrice")
@@ -84,6 +76,14 @@ abstract class Mappers {
                 dayHighPrice: {
                     value: high,
                     cellName: getCellName("dayHighPrice")
+                },
+                high52Price: {
+                    value: high52,
+                    cellName: getCellName("high52Price")
+                },
+                allTimeHighPrice: {
+                    value: allTimeHigh,
+                    cellName: getCellName("allTimeHighPrice")
                 }
             };
         };

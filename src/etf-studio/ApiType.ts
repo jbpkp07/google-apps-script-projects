@@ -48,10 +48,10 @@ abstract class ApiType {
             Type.isNumberOrUndefined(maybe.price) &&
             Type.isNumberOrUndefined(maybe.change) &&
             Type.isNumberOrUndefined(maybe.volume) &&
-            Type.isNumberOrUndefined(maybe.high52) &&
-            Type.isNumberOrUndefined(maybe.high52ch) &&
             Type.isNumberOrUndefined(maybe.low) &&
-            Type.isNumberOrUndefined(maybe.high)
+            Type.isNumberOrUndefined(maybe.high) &&
+            Type.isNumberOrUndefined(maybe.high52) &&
+            Type.isNumberOrUndefined(maybe.allTimeHigh)
         );
     };
 

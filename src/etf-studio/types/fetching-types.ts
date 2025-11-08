@@ -21,10 +21,10 @@ namespace StockAnalysis {
             price?: number;
             change?: number; // % change
             volume?: number;
-            high52?: number;
-            high52ch?: number; // % change
             low?: number;
             high?: number;
+            high52?: number;
+            allTimeHigh?: number;
         };
 
         export type Data = {
@@ -65,19 +65,19 @@ type ETFData = Readonly<{
         value?: number | undefined;
         cellName: Uppercase<string>;
     };
-    high52Price?: {
-        value?: number | undefined;
-        cellName: Uppercase<string>;
-    };
-    high52ChangePercent?: {
-        value?: number | undefined;
-        cellName: Uppercase<string>;
-    };
     dayLowPrice?: {
         value?: number | undefined;
         cellName: Uppercase<string>;
     };
     dayHighPrice?: {
+        value?: number | undefined;
+        cellName: Uppercase<string>;
+    };
+    high52Price?: {
+        value?: number | undefined;
+        cellName: Uppercase<string>;
+    };
+    allTimeHighPrice?: {
         value?: number | undefined;
         cellName: Uppercase<string>;
     };
