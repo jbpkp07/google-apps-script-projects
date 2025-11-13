@@ -8,7 +8,7 @@ function fetchDaytimePrices(event?: TimeDrivenEvent): void {
         const sheet = new FetchingGoogleSheet();
 
         if (sheet.isFetchingEnabled(event)) {
-            sheet.fetchDaytimePrices();
+            sheet.refreshDaytimePrices();
         }
     } catch (error) {
         Utils.alert(error);
@@ -20,7 +20,19 @@ function fetchWatchListData(event?: TimeDrivenEvent): void {
         const sheet = new FetchingGoogleSheet();
 
         if (sheet.isFetchingEnabled(event)) {
-            sheet.fetchWatchListData();
+            sheet.refreshWatchListData();
+        }
+    } catch (error) {
+        Utils.alert(error);
+    }
+}
+
+function fetchAllData(event?: TimeDrivenEvent): void {
+    try {
+        const sheet = new FetchingGoogleSheet();
+
+        if (sheet.isFetchingEnabled(event)) {
+            sheet.refreshAllData();
         }
     } catch (error) {
         Utils.alert(error);

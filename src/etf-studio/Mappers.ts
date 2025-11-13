@@ -3,6 +3,17 @@
 /// <reference path="../common/Either.ts" />
 /// <reference path="../common/Utils.ts" />
 
+type FindPricesDataParams = {
+    pricesResponse: DaytimePricesResponse;
+    ticker: Ticker;
+};
+type FoundPricesData = DaytimePricesData | undefined;
+
+type MapAllToETFDataParams = {
+    watchListResponse: WatchListResponse;
+    pricesResponse: DaytimePricesResponse;
+};
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 abstract class Mappers {
     private static toTicker(symbol: Uppercase<string>): Either<Ticker> {
@@ -15,6 +26,18 @@ abstract class Mappers {
 
     private static getCellNamesOf(row: Ticker) {
         return (col: keyof ETFData) => ETF_FETCHING_TABLE_CELL_NAMES[row][col];
+    }
+
+    private static findPricesDataByTicker(params: FindPricesDataParams): ThrowsOrReturns<FoundPricesData> {
+        const { pricesResponse, ticker } = params;
+
+        const byTicker = (data: DaytimePricesData): boolean => {
+            const { name: symbol } = data;
+
+            return this.toTicker(symbol).unwrap() === ticker;
+        };
+
+        return pricesResponse.data.find(byTicker);
     }
 
     static mapPricesToETFData(response: DaytimePricesResponse): ThrowsOrReturns<ETFData[]> {
@@ -89,5 +112,56 @@ abstract class Mappers {
         };
 
         return response.data.map(toETFData);
+    }
+
+    static mapAllToETFData(params: MapAllToETFDataParams): ThrowsOrReturns<ETFData[]> {
+        const { watchListResponse, pricesResponse } = params;
+
+        const toETFData = (data: WatchListData): ETFData => {
+            const { s: symbol } = data;
+
+            const ticker = this.toTicker(symbol).unwrap();
+            const getCellName = this.getCellNamesOf(ticker);
+
+            const watchListData = data;
+            const pricesData = this.findPricesDataByTicker({ pricesResponse, ticker });
+
+            return {
+                name: {
+                    value: watchListData.n,
+                    cellName: getCellName("name")
+                },
+                price: {
+                    value: pricesData?.price ?? watchListData.price,
+                    cellName: getCellName("price")
+                },
+                changePercent: {
+                    value: pricesData?.change ?? watchListData.change ?? 0, // can be undefined if day change was 0.00%
+                    cellName: getCellName("changePercent")
+                },
+                volume: {
+                    value: pricesData?.volume ?? watchListData.volume,
+                    cellName: getCellName("volume")
+                },
+                dayLowPrice: {
+                    value: watchListData.low,
+                    cellName: getCellName("dayLowPrice")
+                },
+                dayHighPrice: {
+                    value: watchListData.high,
+                    cellName: getCellName("dayHighPrice")
+                },
+                high52Price: {
+                    value: watchListData.high52,
+                    cellName: getCellName("high52Price")
+                },
+                allTimeHighPrice: {
+                    value: watchListData.allTimeHigh,
+                    cellName: getCellName("allTimeHighPrice")
+                }
+            };
+        };
+
+        return watchListResponse.data.map(toETFData);
     }
 }

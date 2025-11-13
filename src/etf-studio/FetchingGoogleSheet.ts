@@ -26,7 +26,7 @@ class FetchingGoogleSheet extends GoogleSheet {
         this.updateLastFetchedTime();
     }
 
-    public fetchDaytimePrices(): ThrowsOrReturns<void> {
+    private fetchDaytimePrices(): Either<DaytimePricesResponse> {
         const fetchData = Utils.fetchDataOf(ApiType.DaytimePricesResponse());
 
         let response = fetchData(DAYTIME_PRICES_URL);
@@ -39,25 +39,46 @@ class FetchingGoogleSheet extends GoogleSheet {
             response = fetchData(DAYTIME_PRICES_URL); // retry
         }
 
-        const etfData = Mappers.mapPricesToETFData(response.unwrap());
-
-        this.updateSheet(etfData);
+        return response;
     }
 
-    public fetchWatchListData(): ThrowsOrReturns<void> {
+    private fetchWatchListData(): Either<WatchListResponse> {
         const fetchData = Utils.fetchDataOf(ApiType.WatchListResponse());
 
         let response = fetchData(WATCH_LIST_DATA_URL);
 
         if (!response.isOK()) {
-            Utils.alert('"Fetch All Data" failed, retrying...');
+            Utils.alert('"Fetch Watch List Data" failed, retrying...');
 
             Utilities.sleep(1000);
 
             response = fetchData(WATCH_LIST_DATA_URL); // retry
         }
 
-        const etfData = Mappers.mapWatchListToETFData(response.unwrap());
+        return response;
+    }
+
+    public refreshDaytimePrices(): ThrowsOrReturns<void> {
+        const response = this.fetchDaytimePrices().unwrap();
+
+        const etfData = Mappers.mapPricesToETFData(response);
+
+        this.updateSheet(etfData);
+    }
+
+    public refreshWatchListData(): ThrowsOrReturns<void> {
+        const response = this.fetchWatchListData().unwrap();
+
+        const etfData = Mappers.mapWatchListToETFData(response);
+
+        this.updateSheet(etfData);
+    }
+
+    public refreshAllData(): ThrowsOrReturns<void> {
+        const watchListResponse = this.fetchWatchListData().unwrap();
+        const pricesResponse = this.fetchDaytimePrices().unwrap();
+
+        const etfData = Mappers.mapAllToETFData({ watchListResponse, pricesResponse });
 
         this.updateSheet(etfData);
     }
