@@ -3,7 +3,7 @@
 namespace StockAnalysis {
     export namespace RealTimePricesAPI {
         export type DaytimeData = {
-            name: Uppercase<string>; // `!TICKER` format
+            name: string; // `!TICKER` format
             price?: number;
             chg?: number; // $ change
             change?: number; // % change
@@ -28,7 +28,7 @@ namespace StockAnalysis {
         };
 
         export type Data = {
-            s: Uppercase<string>; // `!TICKER` format
+            s: string; // `!TICKER` format
             n: string;
         } & ColumnData;
 
@@ -51,35 +51,35 @@ type WatchListColumnNames = readonly (keyof WatchListColumnData)[];
 type ETFData = Readonly<{
     name?: {
         value?: string | undefined;
-        cellName: Uppercase<string>;
+        cellName: string;
     };
     price?: {
         value?: number | undefined;
-        cellName: Uppercase<string>;
+        cellName: string;
     };
     changePercent?: {
         value?: number | undefined;
-        cellName: Uppercase<string>;
+        cellName: string;
     };
     volume?: {
         value?: number | undefined;
-        cellName: Uppercase<string>;
+        cellName: string;
     };
     dayLowPrice?: {
         value?: number | undefined;
-        cellName: Uppercase<string>;
+        cellName: string;
     };
     dayHighPrice?: {
         value?: number | undefined;
-        cellName: Uppercase<string>;
+        cellName: string;
     };
     high52Price?: {
         value?: number | undefined;
-        cellName: Uppercase<string>;
+        cellName: string;
     };
     allTimeHighPrice?: {
         value?: number | undefined;
-        cellName: Uppercase<string>;
+        cellName: string;
     };
 }>;
 

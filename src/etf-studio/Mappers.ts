@@ -16,7 +16,7 @@ type MapAllToETFDataParams = {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 abstract class Mappers {
-    private static toTicker(symbol: Uppercase<string>): Either<Ticker> {
+    private static toTicker(symbol: string): Either<Ticker> {
         const trimmed: string = Utils.trim(symbol, "!");
 
         return ApiType.isTicker(trimmed)

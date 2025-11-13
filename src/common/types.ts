@@ -16,9 +16,9 @@ type IsArrayOK<T> = (value: unknown) => value is NotError<T>[];
 
 type IsStringOK = (value: unknown) => value is string;
 
-type GetCellValue<T> = (cellName: Uppercase<string>) => Either<T>;
+type GetCellValue<T> = (cellName: string) => Either<T>;
 
-type GetRowValues<T> = (rangeName: Uppercase<string>) => Either<T[]>;
+type GetRowValues<T> = (rangeName: string) => Either<T[]>;
 
 type FetchData<T> = (url: string) => Either<T>;
 
