@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-const DOMAIN = "https://stockanalysis.com";
+const DOMAIN = "https://api.stockanalysis.com";
 
 const FETCHING_SHEET_NAME = "Fetching";
 
