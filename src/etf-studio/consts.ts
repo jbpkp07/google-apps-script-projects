@@ -33,6 +33,8 @@ const ETF_FETCHING_TABLE_CELL_NAMES = {
     VBIL: { name: "B38", price: "E38", changePercent: "F38", volume: "G38", dayLowPrice: "H38", dayHighPrice: "I38", high52Price: "J38", allTimeHighPrice: "K38" },
 } as const satisfies ETFFetchingTableCellNames;
 
+const SCRAPING_DOMAIN = "https://stockanalysis.com";
+
 const SCRAPING_SHEET_NAME = "Scraping";
 
 const IS_SCRAPING_ENABLED_CELL_NAME = "B3";
@@ -40,15 +42,15 @@ const LAST_SCRAPED_TIME_CELL_NAME = "B4";
 
 // prettier-ignore
 const ETF_SCRAPING_TABLE_ROWS = {
-    QQQM: { url: `${DOMAIN}/etf/qqqm`, uniqueUrlCellName: "F14", scrapeResultsRangeName: "M14:O14" },
-    SPMO: { url: `${DOMAIN}/etf/spmo`, uniqueUrlCellName: "F15", scrapeResultsRangeName: "M15:O15" },
-    SPY:  { url: `${DOMAIN}/etf/spy`,  uniqueUrlCellName: "F16", scrapeResultsRangeName: "M16:O16" },
-    SPYM: { url: `${DOMAIN}/etf/spym`, uniqueUrlCellName: "F17", scrapeResultsRangeName: "M17:O17" },
-    AVLV: { url: `${DOMAIN}/etf/avlv`, uniqueUrlCellName: "F18", scrapeResultsRangeName: "M18:O18" },
-    MGV:  { url: `${DOMAIN}/etf/mgv`,  uniqueUrlCellName: "F19", scrapeResultsRangeName: "M19:O19" },
-    FMTM: { url: `${DOMAIN}/etf/fmtm`, uniqueUrlCellName: "F20", scrapeResultsRangeName: "M20:O20" },
-    XMMO: { url: `${DOMAIN}/etf/xmmo`, uniqueUrlCellName: "F21", scrapeResultsRangeName: "M21:O21" },
-    RWJ:  { url: `${DOMAIN}/etf/rwj`,  uniqueUrlCellName: "F22", scrapeResultsRangeName: "M22:O22" },
-    AVUV: { url: `${DOMAIN}/etf/avuv`, uniqueUrlCellName: "F23", scrapeResultsRangeName: "M23:O23" },
-    VBIL: { url: `${DOMAIN}/etf/vbil`, uniqueUrlCellName: "F24", scrapeResultsRangeName: "M24:O24" },
+    QQQM: { url: `${SCRAPING_DOMAIN}/etf/qqqm`, uniqueUrlCellName: "F14", scrapeResultsRangeName: "M14:O14" },
+    SPMO: { url: `${SCRAPING_DOMAIN}/etf/spmo`, uniqueUrlCellName: "F15", scrapeResultsRangeName: "M15:O15" },
+    SPY:  { url: `${SCRAPING_DOMAIN}/etf/spy`,  uniqueUrlCellName: "F16", scrapeResultsRangeName: "M16:O16" },
+    SPYM: { url: `${SCRAPING_DOMAIN}/etf/spym`, uniqueUrlCellName: "F17", scrapeResultsRangeName: "M17:O17" },
+    AVLV: { url: `${SCRAPING_DOMAIN}/etf/avlv`, uniqueUrlCellName: "F18", scrapeResultsRangeName: "M18:O18" },
+    MGV:  { url: `${SCRAPING_DOMAIN}/etf/mgv`,  uniqueUrlCellName: "F19", scrapeResultsRangeName: "M19:O19" },
+    FMTM: { url: `${SCRAPING_DOMAIN}/etf/fmtm`, uniqueUrlCellName: "F20", scrapeResultsRangeName: "M20:O20" },
+    XMMO: { url: `${SCRAPING_DOMAIN}/etf/xmmo`, uniqueUrlCellName: "F21", scrapeResultsRangeName: "M21:O21" },
+    RWJ:  { url: `${SCRAPING_DOMAIN}/etf/rwj`,  uniqueUrlCellName: "F22", scrapeResultsRangeName: "M22:O22" },
+    AVUV: { url: `${SCRAPING_DOMAIN}/etf/avuv`, uniqueUrlCellName: "F23", scrapeResultsRangeName: "M23:O23" },
+    VBIL: { url: `${SCRAPING_DOMAIN}/etf/vbil`, uniqueUrlCellName: "F24", scrapeResultsRangeName: "M24:O24" },
 } as const satisfies ETFScrapingTableRows;
