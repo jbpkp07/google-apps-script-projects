@@ -37,14 +37,14 @@
             "**/yarn.lock": true
         },
 
+        "js/ts.format.enabled": false,
+        "js/ts.reportStyleChecksAsWarnings": false,
+        "js/ts.tsdk.path": "./node_modules/typescript/lib",
+        "js/ts.tsdk.promptToUseWorkspaceVersion": true,
+        "js/ts.tsserver.maxMemory": 4096,
+
         "prettier.configPath": ".prettierrc.json",
         "prettier.enable": true,
-
-        "typescript.enablePromptUseWorkspaceTsdk": true,
-        "typescript.format.enable": false,
-        "typescript.reportStyleChecksAsWarnings": false,
-        "typescript.tsdk": "./node_modules/typescript/lib",
-        "typescript.tsserver.maxTsServerMemory": 4096,
 
         "[typescript]": {
             "editor.defaultFormatter": "esbenp.prettier-vscode",
