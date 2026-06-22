@@ -58,4 +58,18 @@ class Either<T> {
             throw this._value;
         }
     }
+
+    public map<U>(fn: (value: T) => U): Either<U> {
+        if (Type.isError(this._value)) {
+            return Either.new<U>(this._value);
+        }
+
+        try {
+            const result = fn(this._value);
+
+            return Either.new<U>(result as NotError<U>);
+        } catch (e) {
+            return Either.fromError<U>(e);
+        }
+    }
 }
