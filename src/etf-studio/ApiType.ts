@@ -3,19 +3,19 @@
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 abstract class ApiType {
-    static isHttpStatusOK = (value: unknown): value is 200 => {
+    static isHttpStatusOK(value: unknown): value is 200 {
         return Type.isLiteralOf(200)(value);
-    };
+    }
 
-    static isTicker = (value: unknown): value is Ticker => {
+    static isTicker(value: unknown): value is Ticker {
         return Type.isStringOfMinLength(1)(value) && TICKERS.includes(value as Ticker);
-    };
+    }
 
-    static isSymbol = (value: unknown): value is TickerSymbol => {
+    static isSymbol(value: unknown): value is TickerSymbol {
         return Type.isStringOfMinLength(1)(value) && SYMBOLS.includes(value as TickerSymbol);
-    };
+    }
 
-    static isDaytimePricesData = (value: unknown): value is DaytimePricesData => {
+    static isDaytimePricesData(value: unknown): value is DaytimePricesData {
         const maybe = value as DaytimePricesData;
 
         return (
@@ -26,9 +26,9 @@ abstract class ApiType {
             Type.isNumberOrUndefined(maybe.change) &&
             Type.isNumberOrUndefined(maybe.volume)
         );
-    };
+    }
 
-    static isDaytimePricesResponse = (value: unknown): value is DaytimePricesResponse => {
+    static isDaytimePricesResponse(value: unknown): value is DaytimePricesResponse {
         const maybe = value as DaytimePricesResponse;
 
         return (
@@ -36,9 +36,9 @@ abstract class ApiType {
             ApiType.isHttpStatusOK(maybe.status) &&
             Type.isArrayOf(ApiType.DaytimePricesData())(maybe.data)
         );
-    };
+    }
 
-    static isWatchListData = (value: unknown): value is WatchListData => {
+    static isWatchListData(value: unknown): value is WatchListData {
         const maybe = value as WatchListData;
 
         return (
@@ -53,9 +53,9 @@ abstract class ApiType {
             Type.isNumberOrUndefined(maybe.high52) &&
             Type.isNumberOrUndefined(maybe.allTimeHigh)
         );
-    };
+    }
 
-    static isWatchListResponse = (value: unknown): value is WatchListResponse => {
+    static isWatchListResponse(value: unknown): value is WatchListResponse {
         const maybe = value as WatchListResponse;
 
         return (
@@ -63,14 +63,22 @@ abstract class ApiType {
             ApiType.isHttpStatusOK(maybe.status) &&
             Type.isArrayOf(ApiType.WatchListData())(maybe.data)
         );
-    };
+    }
 
     // nouns
-    static DaytimePricesData = () => ApiType.isDaytimePricesData;
+    static DaytimePricesData() {
+        return ApiType.isDaytimePricesData.bind(ApiType);
+    }
 
-    static DaytimePricesResponse = () => ApiType.isDaytimePricesResponse;
+    static DaytimePricesResponse() {
+        return ApiType.isDaytimePricesResponse.bind(ApiType);
+    }
 
-    static WatchListData = () => ApiType.isWatchListData;
+    static WatchListData() {
+        return ApiType.isWatchListData.bind(ApiType);
+    }
 
-    static WatchListResponse = () => ApiType.isWatchListResponse;
+    static WatchListResponse() {
+        return ApiType.isWatchListResponse.bind(ApiType);
+    }
 }
