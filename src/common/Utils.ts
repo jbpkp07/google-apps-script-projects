@@ -2,7 +2,7 @@
 /// <reference path="./Either.ts" />
 
 abstract class Utils {
-    static alert = (anything: unknown): void => {
+    static alert(anything: unknown): void {
         const message = Utils.stringify(anything);
         const timeStampMessage = Utils.createTimeStampMessage(message);
 
@@ -11,15 +11,15 @@ abstract class Utils {
         } catch {
             console.log(timeStampMessage); // log to cloud
         }
-    };
+    }
 
-    static createTimeStampMessage = (message: string): string => {
+    static createTimeStampMessage(message: string): string {
         const timeStamp = Utils.getCurrentTime();
 
         return `[${timeStamp}] ${message}`;
-    };
+    }
 
-    static createUniqueURL = (url: string): string => {
+    static createUniqueURL(url: string): string {
         Utilities.sleep(1);
 
         const trimmedUrl = Utils.trim(url, "/");
@@ -34,9 +34,9 @@ abstract class Utils {
         }
 
         return trimmedUrl + "/?" + uniqueNumber;
-    };
+    }
 
-    static fetchData = (url: string): Either<unknown> => {
+    static fetchData(url: string): Either<unknown> {
         try {
             const json: string = UrlFetchApp.fetch(url).getContentText();
             const data: unknown = JSON.parse(json);
@@ -45,9 +45,9 @@ abstract class Utils {
         } catch (error) {
             return Either.fromError(error);
         }
-    };
+    }
 
-    static fetchDataOf = <T>(isTypeOK: IsTypeOK<T>): FetchData<T> => {
+    static fetchDataOf<T>(isTypeOK: IsTypeOK<T>): FetchData<T> {
         //
         const fetchData = (url: string): Either<T> => {
             try {
@@ -63,20 +63,20 @@ abstract class Utils {
         };
 
         return fetchData;
-    };
+    }
 
-    static getCurrentTime = (): string => {
+    static getCurrentTime(): string {
         return new Date().toLocaleTimeString();
-    };
+    }
 
-    static logToCloud = (anything: unknown): void => {
+    static logToCloud(anything: unknown): void {
         const message = Utils.stringify(anything);
         const timeStampMessage = Utils.createTimeStampMessage(message);
 
         console.log(timeStampMessage);
-    };
+    }
 
-    static stringify = (anything: unknown): string => {
+    static stringify(anything: unknown): string {
         if (anything instanceof Either) {
             return Utils.stringify(anything.value());
         }
@@ -84,9 +84,9 @@ abstract class Utils {
         const isSimple = Type.isError(anything) || !Type.isObject(anything);
 
         return isSimple ? String(anything) : JSON.stringify(anything);
-    };
+    }
 
-    static trim = (str: string, pattern: string): string => {
+    static trim(str: string, pattern: string): string {
         if (str.startsWith(pattern)) {
             const start = pattern.length;
 
@@ -100,7 +100,7 @@ abstract class Utils {
         }
 
         return str;
-    };
+    }
 }
 
 /* eslint @typescript-eslint/member-ordering: ["warn", { default: { order: "natural" } }] */
