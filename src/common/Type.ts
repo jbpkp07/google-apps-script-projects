@@ -1,89 +1,97 @@
 abstract class Type {
-    static isArray = (value: unknown): value is unknown[] => {
+    static isArray(value: unknown): value is unknown[] {
         return Array.isArray(value);
-    };
+    }
 
-    static isArrayOf = <T>(isTypeOK: IsTypeOK<T>): IsArrayOK<T> => {
+    static isArrayOf<T>(isTypeOK: IsTypeOK<T>): IsArrayOK<T> {
         //
         const isArray = (value: unknown): value is NotError<T>[] => {
             return Type.isArray(value) && value.every(isTypeOK);
         };
 
         return isArray;
-    };
+    }
 
-    static isBasicRecord = (value: unknown): value is NotError<BasicRecord> => {
+    static isBasicRecord(value: unknown): value is NotError<BasicRecord> {
         return Object.prototype.toString.call(value) === "[object Object]";
-    };
+    }
 
-    static isBoolean = (value: unknown): value is boolean => {
+    static isBoolean(value: unknown): value is boolean {
         return typeof value === "boolean";
-    };
+    }
 
-    static isError = (value: unknown): value is Error => {
+    static isError(value: unknown): value is Error {
         return value instanceof Error;
-    };
+    }
 
-    static isLiteralOf = <T extends Literal>(literal: T): IsTypeOK<T> => {
+    static isLiteralOf<T extends Literal>(literal: T): IsTypeOK<T> {
         //
         const isLiteral = (value: unknown): value is NotError<T> => {
             return value === literal;
         };
 
         return isLiteral;
-    };
+    }
 
-    static isNonEmptyLiteral = (value: unknown): value is Literal => {
+    static isNonEmptyLiteral(value: unknown): value is Literal {
         return Type.isStringOfMinLength(1)(value) || Type.isNumber(value) || Type.isBoolean(value);
-    };
+    }
 
-    static isNonEmptyRecord = (value: unknown): value is NotError<BasicRecord> => {
+    static isNonEmptyRecord(value: unknown): value is NotError<BasicRecord> {
         return Type.isBasicRecord(value) && Object.keys(value).length > 0;
-    };
+    }
 
-    static isNumber = (value: unknown): value is number => {
+    static isNumber(value: unknown): value is number {
         return typeof value === "number" && Number.isFinite(value);
-    };
+    }
 
-    static isNumberOrUndefined = (value: unknown): value is number | undefined => {
+    static isNumberOrUndefined(value: unknown): value is number | undefined {
         return Type.isNumber(value) || Type.isUndefined(value);
-    };
+    }
 
-    static isObject = (value: unknown): value is NonNullable<object> => {
+    static isObject(value: unknown): value is NonNullable<object> {
         return typeof value === "object" && value !== null;
-    };
+    }
 
-    static isString = (value: unknown): value is string => {
+    static isString(value: unknown): value is string {
         return typeof value === "string";
-    };
+    }
 
-    static isStringOfMinLength = (length: number): IsStringOK => {
+    static isStringOfMinLength(length: number): IsStringOK {
         //
         const isString = (value: unknown): value is string => {
             return Type.isString(value) && value.length >= length;
         };
 
         return isString;
-    };
+    }
 
-    static isStringLowercase = (value: unknown): value is Lowercase<string> => {
+    static isStringLowercase(value: unknown): value is Lowercase<string> {
         return Type.isString(value) && value.toLowerCase() === value;
-    };
+    }
 
-    static isStringUppercase = (value: unknown): value is Uppercase<string> => {
+    static isStringUppercase(value: unknown): value is Uppercase<string> {
         return Type.isString(value) && value.toUpperCase() === value;
-    };
+    }
 
-    static isUndefined = (value: unknown): value is undefined => {
+    static isUndefined(value: unknown): value is undefined {
         return value === undefined;
-    };
+    }
 
     // nouns
-    static boolean = () => Type.isBoolean;
+    static boolean() {
+        return Type.isBoolean.bind(Type);
+    }
 
-    static number = () => Type.isNumber;
+    static number() {
+        return Type.isNumber.bind(Type);
+    }
 
-    static numberArray = () => Type.isArrayOf(Type.number());
+    static numberArray() {
+        return Type.isArrayOf(Type.number());
+    }
 
-    static stringOfMinLength = (length: number) => Type.isStringOfMinLength(length);
+    static stringOfMinLength(length: number) {
+        return Type.isStringOfMinLength(length);
+    }
 }
