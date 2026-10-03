@@ -13,12 +13,7 @@ abstract class Type {
     };
 
     static isBasicRecord = (value: unknown): value is NotError<BasicRecord> => {
-        return (
-            Type.isObject(value) &&
-            !Type.isArray(value) &&
-            !Type.isError(value) &&
-            Object.keys(value).every(Type.isStringOfMinLength(1))
-        );
+        return Object.prototype.toString.call(value) === "[object Object]";
     };
 
     static isBoolean = (value: unknown): value is boolean => {
@@ -47,7 +42,7 @@ abstract class Type {
     };
 
     static isNumber = (value: unknown): value is number => {
-        return typeof value === "number";
+        return typeof value === "number" && Number.isFinite(value);
     };
 
     static isNumberOrUndefined = (value: unknown): value is number | undefined => {
