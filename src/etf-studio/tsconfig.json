@@ -4,5 +4,6 @@
     "compilerOptions": {
         "outFile": "../../dist/etf-studio/index.js"
     },
-    "include": ["./**/*.ts", "../common/**/*.ts"]
+    "include": ["./**/*.ts", "../common/**/*.ts"],
+    "exclude": ["./local-scripts/**/*.ts"]
 }

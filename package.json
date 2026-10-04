@@ -24,6 +24,7 @@
         "prettify:dist": "eslint --fix ./dist --max-warnings=0",
         "rollback:dist": "npm run clean:dist -s && exit 1",
         "start": "npm run clean:cache -s && ts-node-dev --cache-directory .cache --respawn --rs --cls --project",
+        "start:calc-add": "npm run start -s ./src/etf-studio/local-scripts/tsconfig.json ./src/etf-studio/local-scripts/calc-average-daily-dip/index.ts",
         "start:common": "npm run start -s ./src/common/tsconfig.json --",
         "start:etf-studio": "npm run start -s ./src/etf-studio/tsconfig.json --",
         "start:project-template": "npm run start -s ./src/project-template/tsconfig.json --"
