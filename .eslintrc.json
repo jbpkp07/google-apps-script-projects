@@ -64,7 +64,7 @@
                 ],
                 "@typescript-eslint/no-use-before-define": [
                     "warn",
-                    { "functions": false, "classes": true, "variables": true, "allowNamedExports": false }
+                    { "functions": false, "classes": true, "variables": true, "allowNamedExports": true }
                 ],
                 "@typescript-eslint/triple-slash-reference": "off",
                 "class-methods-use-this": "off",
@@ -85,12 +85,13 @@
                 "newline-before-return": "warn",
                 "no-await-in-loop": "off",
                 "no-console": "off",
+                "no-continue": "off",
                 "no-plusplus": ["warn", { "allowForLoopAfterthoughts": true }],
                 "no-restricted-syntax": ["warn", "ForInStatement", "LabeledStatement", "WithStatement"],
                 "no-underscore-dangle": "off",
                 "no-void": "off",
                 "padding-line-between-statements": [
-                    "error",
+                    "warn",
                     { "blankLine": "always", "prev": "function", "next": "*" },
                     { "blankLine": "always", "prev": "*", "next": "function" },
                     { "blankLine": "always", "prev": "class", "next": "*" },
@@ -99,7 +100,8 @@
                     { "blankLine": "always", "prev": "*", "next": "if" },
                     { "blankLine": "always", "prev": "for", "next": "*" },
                     { "blankLine": "always", "prev": "*", "next": "for" },
-                    { "blankLine": "always", "prev": "expression", "next": ["const", "let"] }
+                    { "blankLine": "always", "prev": "expression", "next": ["const", "let"] },
+                    { "blankLine": "always", "prev": "*", "next": "continue" }
                 ],
                 "prefer-template": "off",
                 "prettier/prettier": ["warn", {}, { "usePrettierrc": true }],
