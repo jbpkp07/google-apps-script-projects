@@ -45,14 +45,14 @@ class FetchingGoogleSheet extends GoogleSheet {
     private fetchWatchListData(): Either<WatchListResponse> {
         const fetchData = Utils.fetchDataOf(ApiType.WatchListResponse());
 
-        let response = fetchData(WATCH_LIST_DATA_URL);
+        let response = fetchData(WATCHLIST_DATA_URL);
 
         if (!response.isOK()) {
             Utils.alert('"Fetch Watch List Data" failed, retrying...');
 
             Utilities.sleep(1000);
 
-            response = fetchData(WATCH_LIST_DATA_URL); // retry
+            response = fetchData(WATCHLIST_DATA_URL); // retry
         }
 
         return response;

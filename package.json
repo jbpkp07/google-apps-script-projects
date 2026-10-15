@@ -21,7 +21,7 @@
         "check:repo": "npm run check:eslint -s && npm run check:package-json -s",
         "clean:cache": "rm -rf ./.cache",
         "clean:dist": "rm -rf ./dist",
-        "prettify:dist": "eslint --fix ./dist --max-warnings=0",
+        "prettify:dist": "prettier --write ./dist && eslint --fix ./dist --max-warnings=0",
         "rollback:dist": "npm run clean:dist -s && exit 1",
         "start": "npm run clean:cache -s && ts-node-dev --cache-directory .cache --respawn --rs --cls --project",
         "start:calc-add": "npm run start -s ./src/etf-studio/local-scripts/tsconfig.json ./src/etf-studio/local-scripts/calc-average-daily-dip/index.ts",
